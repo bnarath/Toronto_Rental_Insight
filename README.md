@@ -21,7 +21,6 @@ The purpose of this project is to help users find a rental property that fits wi
 * Python
 * D3
 * Leaflet
-* PostGres, MySql
 * MongoDB
 * HTML
 * JavaScript
