@@ -54,11 +54,6 @@ By default/opening dashboard, the side bar will contain dropdown menus that enab
 * Number of bedrooms
 * Number of washrooms
 
-
-<img src="Images/rental_fsa.png" alt="Headline" width="1000"/>
-
-<img src="Images/rental.png" alt="Headline" width="1000"/>
-
 <img src="Images/filter.png" alt="Headline" width="1000"/>
 
 A filter button at the top of the sidebar will enable users to toggle back to this view. 
@@ -69,6 +64,8 @@ Otherwise, there will be three versions of the sidebar based on how users intera
 * Rental posting details
 * Bar chart of average income with FSA compared to Toronto overall
 * Heat map of Toronto showing crime incidence
+
+<img src="Images/rental.png" alt="Headline" width="1000"/>
 
 #### Click on Community Asset Marker
 * Community Asset information 
@@ -82,7 +79,7 @@ Rental posting data
 * bar graph displaying average cost to rent in FSA (data scrapped that day) by number of bedrooms.
 * line graph displaying average to rent in FSA over time (historical/trending data) by number of bedrooms.
 
-<img src="Images/rental.png" alt="Headline" width="1000"/>
+<img src="Images/rental_fsa.png" alt="Headline" width="1000"/>
 
 Crime data
 * bar graph displaying average cost to rent in FSA (data scrapped that day) by number of bedrooms.
