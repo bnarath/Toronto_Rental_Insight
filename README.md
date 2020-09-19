@@ -7,7 +7,7 @@ This project is a continuation of the Toronto_Rental_ETL_Project. The Toronto_Re
 The purpose of this project is to help users find a rental property that fits within their budget as well as other requirements such as being located in a crime free neighborhood and is in close proximity to community services such as schools and healthcare centers.
 
 ### Data Sources
-* Toronto Rental Data - Cragslist, Kijiji
+* Toronto Rental Data - Craigslist, Kijiji
 * Crime
 * Community Services
 * Income
@@ -27,10 +27,6 @@ The purpose of this project is to help users find a rental property that fits wi
 * CSS
 * BootStrap
 * BeautifulSoap
-
-
-## Project Description
-(Provide more detailed overview of the project.  Talk a bit about your data sources and what questions and hypothesis you are exploring. What specific data analysis/visualization and modelling work are you using to solve the problem? What blockers and challenges are you facing?  Feel free to number or bullet point things here)
 
 ## Project Architecture
 
