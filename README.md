@@ -4,9 +4,9 @@ Toronto Rental Insight
 ## Architecture consists of full stack - Front End, Backend and ETL
 
 ### ETL
-#### Extract: Extracts the data from Kijiji, Craigslist, Toronto Police Services(TPS),  Canada Revenue Agency (CRA), and Stats Canada using Scraping, API services.
+- Extract: Extracts the data from Kijiji, Craigslist, Toronto Police Services(TPS),  Canada Revenue Agency (CRA), and Stats Canada using Scraping, API services.
 
-#### Transform: Transformation of data through various python packages.Load: Loads the data to the cloud MongoDB(Atlas) database.ETL is separate from the cloud application. Serves as a separate functionality to extract, transform and preload the database. 
+### Transform: Transformation of data through various python packages.Load: Loads the data to the cloud MongoDB(Atlas) database.ETL is separate from the cloud application. Serves as a separate functionality to extract, transform and preload the database. 
 
 ### BackEnd
 Backend consists of a Flask Core engine which has 4 core components.
