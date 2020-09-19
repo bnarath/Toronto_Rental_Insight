@@ -1,4 +1,4 @@
-# Toronto_Rental_Insight
+# Toronto Rental Insight App
 This project is a continuation of the Toronto_Rental_ETL_Project. The Toronto_Rental_ETL_Project scraped, cleaned, transformed and stored data from multiple data sources and made it available for use through a Flask API which can be found here. This project aims to further automate the task of acquiring the data by using a scheduler that will scrape the data sources on a daily bases and update the database. This project also aims to make this data available to users for exploration through the creation of a user friendly, interactive dashboard.  
 
 #### -- Project Status: Active
