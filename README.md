@@ -50,10 +50,12 @@ The map will included the following functionalities:
 
 By default/opening dashboard, the side bar will contain dropdown menus that enable users to filter the rental posting markers display by:
 * FSA
-<img src="Images/rental_fsa.jpg" alt="Headline" width="1000"/>
+<img src="Images/rental_fsa.png" alt="Headline" width="1000"/>
 * Rental cost
+<img src="Images/rental.png" alt="Headline" width="1000"/>
 * Number of bedrooms
 * Number of washrooms
+<img src="Images/filter.png" alt="Headline" width="1000"/>
 
 A filter button at the top of the sidebar will enable users to toggle back to this view. 
 
@@ -66,6 +68,7 @@ Otherwise, there will be three versions of the sidebar based on how users intera
 
 #### Click on Community Asset Marker
 * Community Asset information 
+<img src="Images/community.png" alt="Headline" width="1000"/>
 
 #### Click on FSA
 
@@ -75,9 +78,13 @@ Rental posting data
 * bar graph displaying average cost to rent in FSA (data scrapped that day) by number of bedrooms.
 * line graph displaying average to rent in FSA over time (historical/trending data) by number of bedrooms.
 
+<img src="Images/rental.png" alt="Headline" width="1000"/>
+
 Crime data
 * bar graph displaying average cost to rent in FSA (data scrapped that day) by number of bedrooms.
 * line graph displaying average to rent in FSA over time (historical/trending data) by number of bedrooms.
+
+<img src="Images/crime.png" alt="Headline" width="1000"/>
 
 
 ## Needs of this project
