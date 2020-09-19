@@ -120,7 +120,4 @@ Crime data
 - data exploration
 - data processing/cleaning
 - statistical modeling
-- writeup/reporting
-- etc. (be as specific as possible)
-
-=======
+- Dashboard Building
