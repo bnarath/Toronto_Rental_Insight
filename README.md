@@ -39,11 +39,11 @@ The purpose of this project is to help users find a rental property that fits wi
 
 ### BackEnd
 Backend consists of a Flask Core engine which has 4 core components.
-- Scraper: 
+- **Scraper:** 
 Crawls the Rental Data from Craigslist
-- Scheduler: 
+- **Scheduler:** 
 Schedules scraping every day at 12 AM EDT
-- Differencer:
+- **Differencer:**
 Updates the daily and historical rental DB Tables. 
 Marks the rental postings unavailable once taken offAPI endpoints: Hosts the API endpoints
 
