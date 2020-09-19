@@ -25,6 +25,9 @@ The purpose of this project is to help users find a rental property that fits wi
 * HTML
 * JavaScript
 * CSS
+* BootStrap
+* BeautifulSoap
+
 
 ## Project Description
 (Provide more detailed overview of the project.  Talk a bit about your data sources and what questions and hypothesis you are exploring. What specific data analysis/visualization and modelling work are you using to solve the problem? What blockers and challenges are you facing?  Feel free to number or bullet point things here)
@@ -35,8 +38,8 @@ The purpose of this project is to help users find a rental property that fits wi
 
 ## Needs of this project
 
-- frontend developers
-- data exploration/descriptive statistics
+- User Experience 
+- data exploration
 - data processing/cleaning
 - statistical modeling
 - writeup/reporting
