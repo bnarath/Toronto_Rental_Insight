@@ -1,5 +1,5 @@
 # Toronto Rental Insight App
-This project is a continuation of the Toronto_Rental_ETL_Project. The Toronto_Rental_ETL_Project scraped, cleaned, transformed and stored data from multiple data sources and made it available for use through a Flask API which can be found here. This project aims to further automate the task of acquiring the data by using a scheduler that will scrape the data sources on a daily bases and update the database. This project also aims to make this data available to users for exploration through the creation of a user friendly, interactive dashboard.  
+This project is a continuation of the Toronto_Rental_ETL_Project. The Toronto_Rental_ETL_Project scraped, cleaned, transformed and stored data from multiple data sources and made it available for use through a Flask API which can be found [here](https://github.com/bnarath/Toronto_Rental_ETL_Project/blob/master/README.md). This project aims to further automate the task of acquiring the data by using a scheduler that will scrape the data sources on a daily bases and update the database. This project also aims to make this data available to users for exploration through the creation of a user friendly, interactive dashboard.  
 
 #### -- Project Status: Active
 
@@ -7,10 +7,10 @@ This project is a continuation of the Toronto_Rental_ETL_Project. The Toronto_Re
 The purpose of this project is to help users find a rental property that fits within their budget as well as other requirements such as being located in a crime free neighborhood and is in close proximity to community services such as schools and healthcare centers.
 
 ### Data Sources
-* Toronto Rental Data - Craigslist, Kijiji
-* Crime
-* Community Services
-* Income
+* Toronto Rental Data - [Craigslist](https://toronto.craigslist.org/search/hhh), [Kijiji](https://www.kijiji.ca/)
+* Crime Data - [Toronto Police Services Open Data](https://data.torontopolice.on.ca/pages/catalogue)
+* Community Services Data - [Toronto Public Services](https://torontops.maps.arcgis.com/home/item.html?)
+* Income Data - [Canada Revenue Agency](https://www.canada.ca/en/revenue-agency/programs/about-canada-revenue-agency-cra/income-statistics-gst-hst-statistics/individual-tax-statistics-fsa/individual-tax-statistics-fsa-2017-edition-2015-tax-year.html#toc9)
 
 ### Methods Used
 * Data Visualization
