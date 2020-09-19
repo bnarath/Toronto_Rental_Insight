@@ -50,11 +50,15 @@ The map will included the following functionalities:
 
 By default/opening dashboard, the side bar will contain dropdown menus that enable users to filter the rental posting markers display by:
 * FSA
-<img src="Images/rental_fsa.png" alt="Headline" width="1000"/>
 * Rental cost
-<img src="Images/rental.png" alt="Headline" width="1000"/>
 * Number of bedrooms
 * Number of washrooms
+
+
+<img src="Images/rental_fsa.png" alt="Headline" width="1000"/>
+
+<img src="Images/rental.png" alt="Headline" width="1000"/>
+
 <img src="Images/filter.png" alt="Headline" width="1000"/>
 
 A filter button at the top of the sidebar will enable users to toggle back to this view. 
