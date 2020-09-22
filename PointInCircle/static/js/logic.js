@@ -101,6 +101,8 @@ function CreateMap(rental, crime){
       L.control.layers(baseMaps, overlay, {
         collapsed: true
       }).addTo(map);
+      //sidebar
+    var sidebar = L.control.sidebar('sidebar').addTo(map);
 
 
 
