@@ -1,4 +1,4 @@
-function createMap (holder1, holder2, holder3, holder4, holder5, holder6, holder7, rental) {
+function createMap (holder1, holder2, holder3, holder4, holder5, holder6, holder7) {
 
   //create fsa layer from FSA geoJSON file
 
@@ -25,8 +25,7 @@ function createMap (holder1, holder2, holder3, holder4, holder5, holder6, holder
       "Food & Housing" : holder4,
       "Health Services" : holder5,
       "Law & Government": holder6,
-      "Tranportation" : holder7, 
-      "Rental Postings" : rental
+      "Tranportation" : holder7
     };
 
   // create tile layer
@@ -43,84 +42,69 @@ function createMap (holder1, holder2, holder3, holder4, holder5, holder6, holder
   var TorontoMap = L.map("map", {
     center: [43.72, -79.35],
     zoom: 12,
-    layers : [streetview, FSA, rental]
+    layers : [streetview, FSA]
   });
 
   // Pass map layers into layer control and add the layer control to the map
   L.control.layers(null, overlayMaps, {collapsed:false}).addTo(TorontoMap);
 };
 
-function ReadLayersDisplay () {
+function communityAssetDisplay () {
 
     //create fsa layer from geoJSON file
 
-  var communityAssetpath = "static/js/community_assets_with_cooridnates.csv";
+var communityAssetpath = "static/js/community_assets_with_cooridnates.csv";
 
-  var servicesAsset = new L.LayerGroup();
-  var healthAsset = new L.LayerGroup();
-  var foodAsset = new L.LayerGroup();
-  var transportAsset = new L.LayerGroup();
-  var lawAsset = new L.LayerGroup();
-  var educationAsset = new L.LayerGroup();
-  var financialAsset = new L.LayerGroup();
+var servicesAsset = new L.LayerGroup();
+var healthAsset = new L.LayerGroup();
+var foodAsset = new L.LayerGroup();
+var transportAsset = new L.LayerGroup();
+var lawAsset = new L.LayerGroup();
+var educationAsset = new L.LayerGroup();
+var financialAsset = new L.LayerGroup();
 
-  d3.csv(communityAssetpath, d => {
+d3.csv(communityAssetpath, d => {
 
-      d.forEach(row=> {
+    d.forEach(row=> {
 
-        var lat = parseFloat(row.latitude).toFixed(10);
-        var long = parseFloat(row.longitude).toFixed(10);
-        var category = row.category;
-        var agencyName = row.agency_name;
+  var lat = parseFloat(row.latitude).toFixed(10);
+  var long = parseFloat(row.longitude).toFixed(10);
+  var category = row.category;
+  var agencyName = row.agency_name;
     
-        if (row.category == "Community Services") {
-          markerAllocation(agencyName, category, lat, long, servicesAsset)
-        }
-        else if (row.category == "Education & Employment") {
-          markerAllocation(agencyName,category, lat, long, educationAsset)
-        }
-        else if (row.category == "Financial Services") {
-          markerAllocation(agencyName, category, lat, long, financialAsset)
-        }
-        else if (row.category == "Food & Housing") {
-          markerAllocation(agencyName, category, lat, long, foodAsset)
-        }
-        else if (row.category == "Health Services") {
-          markerAllocation(agencyName, category, lat, long, healthAsset)
-        }
-        else if (row.category == "Law & Government") {
-          markerAllocation(agencyName, category, lat, long, lawAsset)
-        }
-        else if (row.category == "Transportation") {
-          markerAllocation(agencyName, category, lat, long, transportAsset)
-        }
-        else {
-        }
+    if (row.category == "Community Services") {
+      markerAllocation(agencyName, category, lat, long, servicesAsset)
+    }
+    else if (row.category == "Education & Employment") {
+      markerAllocation(agencyName,category, lat, long, educationAsset)
+    }
+    else if (row.category == "Financial Services") {
+      markerAllocation(agencyName, category, lat, long, financialAsset)
+    }
+    else if (row.category == "Food & Housing") {
+      markerAllocation(agencyName, category, lat, long, foodAsset)
+    }
+    else if (row.category == "Health Services") {
+      markerAllocation(agencyName, category, lat, long, healthAsset)
+    }
+    else if (row.category == "Law & Government") {
+      markerAllocation(agencyName, category, lat, long, lawAsset)
+    }
+    else if (row.category == "Transportation") {
+      markerAllocation(agencyName, category, lat, long, transportAsset)
+    }
+    else {
+      console.log("error")
+    }
     });
 
-          //create rental and crime postings
-          d3.csv('static/data/Rental_Craigslist.csv', function(rental){
-
-              //rental posting layer
-              var rentalMarkers = [];
-
-              rental.forEach(function(feature) {
-                rentalMarkers.push(L.marker([feature.lat, feature.long]).bindPopup(feature.title));
-              });
-
-              var rentalMarkerGroup = L.layerGroup(rentalMarkers);
-
-            createMap(servicesAsset, educationAsset, 
-              financialAsset, foodAsset, 
-              healthAsset, lawAsset, transportAsset, rentalMarkerGroup);
-          
-          });
-    });
-
+  createMap(servicesAsset, educationAsset, financialAsset, foodAsset, healthAsset, lawAsset, transportAsset);
+  });
 
 };
 
-ReadLayersDisplay ();
+
+communityAssetDisplay();
 
 
 
