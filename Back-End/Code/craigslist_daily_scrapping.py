@@ -215,18 +215,20 @@ def extract(s):
 
 
 def geocode(addresses):
-    ### Geocode the address to lat long
+    ### Geocode(MapQuest) the address to lat long
     #Input: a dictionary with key as index and value as address
     #Output: a dictionary with key as index and value as (lat, long) tuple
     lat_long = {}
     for index in addresses:
         try:
-            url = geocode_api+f'?address={addresses[index]}'+f'&key={google_api}'
+            #Small tweek for 'queens quay'
+            location = (addresses[index]+' ,Toronto' if addresses[index].lower()=='queens quay' else addresses[index])
+            url = geocode_mq_base+f'key={mq_key}&location={location}'
             url = re.sub(' +', '%20', url)
             response = requests.get(url)
             if response.ok:
                 content = response.json()
-                lat_long[index]=tuple(content['results'][0]['geometry']['location'].values())
+                lat_long[index]=tuple(content['results'][0]['locations'][0]['latLng'].values())
             else:
                 lat_long[index]=None
         except Exception as e:
@@ -236,19 +238,20 @@ def geocode(addresses):
     return lat_long
 
 def reverse_geocode(loc):
+    #(MapQuest)
     #Input: tuple - (lat, long)
     #Output: string - Postal Code
     lat, long = loc
     postal_code = None
     try:
-        url = reverse_geocode_api+f'?latlng={lat},{long}&result_type=postal_code'+f'&key={google_api}'
+        url = reverse_geocode_mq_base.format(mq_key, lat, long)
         url = re.sub(' +', '%20', url)
         #print(url)
         response = requests.get(url)
         if response.ok:
             content = response.json()
-            postal_code = content['results'][0]["address_components"][0]['long_name'] if 'postal_code' in content['results'][0]\
-["address_components"][0]['types'] else None
+            postal_code = content['results'][0]["locations"][0]['postalCode'] if 'postalCode'\
+            in content['results'][0]["locations"][0] else None
     except Exception as e:
         print(e)
     print("Finished reverse_geocode")
