@@ -58,7 +58,8 @@ function CreateMap(rental, crime){
         
         obj.on('click', function(e) {
           // marker clicked is e.target
-       
+          //print to console
+          console.log("Here");
           // remove active circle if any
           if(activeCircle) {
             map.removeLayer(activeCircle);
