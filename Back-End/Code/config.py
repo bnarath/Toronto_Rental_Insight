@@ -1,2 +1,0 @@
-google_api='AIzaSyCh9vL2MysHcljjTJQPSH_8qu_8j_9GQus'
-mq_key='wzrgwWB0NxWViNVtSJ4xJ7Wa6PbuOMSZ'
