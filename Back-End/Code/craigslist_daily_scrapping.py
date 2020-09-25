@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #Dependencies
 from craigslist import CraigslistHousing
 from pymongo import MongoClient
@@ -9,6 +10,7 @@ import time
 import pandas as pd
 import re
 from datetime import datetime, timedelta, timezone
+import os
 
 from urls_list import * #where all urls and paths are saved
 from config import * #keys are saved
@@ -56,12 +58,15 @@ def instatiate_driver():
     #Instatiate Selenium driver
     #Returns the handle object
     #########################################################################################
-    chrome_options = webdriver.ChromeOptions()
-    CHROMEDRIVER_PATH = executable_path
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--headless')
-    driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=chrome_options)
+    executable_path = os.environ.get('CHROMEDRIVER_PATH', '/usr/local/bin/chromedriver')#
+    chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', '/usr/local/bin/chromedriver')#
+    options = webdriver.ChromeOptions()#
+    #options.binary_location = chrome_bin#
+    options.add_argument("--no-sandbox") 
+    options.add_argument("--disable-gpu") 
+    options.add_argument("--headless") 
+    driver = webdriver.Chrome(executable_path=executable_path, options=options)#
+    #driver = webdriver.Chrome(executable_path=executable_path)#
     print("Finished instatiate_driver")
     return driver
 
@@ -209,7 +214,7 @@ def extract(s):
         found_furnished = re.findall('furnished', s , flags=re.IGNORECASE)
         furnished = (None if not found_furnished else True)
     
-    print("Finished extract")
+    # print("Finished extract")
     return [sf,br,ba, cats_allowed, dogs_allowed, Type, furnished]
 
 
@@ -234,7 +239,7 @@ def geocode(addresses):
         except Exception as e:
             print(e)
             lat_long[index]=None
-    print("Finished geocode")
+    # print("Finished geocode")
     return lat_long
 
 def reverse_geocode(loc):
@@ -254,7 +259,7 @@ def reverse_geocode(loc):
             in content['results'][0]["locations"][0] else None
     except Exception as e:
         print(e)
-    print("Finished reverse_geocode")
+    # print("Finished reverse_geocode")
     return postal_code 
 
 
@@ -288,7 +293,7 @@ def clean_rental_for_merge(df):
     DF['lat'] = DF.geotag.map(lambda x: float(x[0]))
     DF['long'] = DF.geotag.map(lambda x: float(x[1]))
     #To clean
-    DF['price'] = DF['price'].map(lambda x: re.sub(r'[^\d]', '',x))
+    DF['price'] = DF['price'].map(lambda x: int(re.sub(r'[^\d]', '',x)) if re.sub(r'[^\d]', '',x) else re.sub(r'[^\d]', '',x))
     #To drop
     DF.drop(["repost_of", "deleted", "apartment_feature", "cats_allowed", "dogs_allowed", "geotag", "posting", "attributes", "last_updated"], axis=1, inplace=True)
     #Add one source column
@@ -333,4 +338,6 @@ def updateDB():
     client.close()
     print("Finished updateDB")
 
-updateDB()
+##Checking update
+if __name__ == "__main__":
+    updateDB()
