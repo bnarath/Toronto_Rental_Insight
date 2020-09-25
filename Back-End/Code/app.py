@@ -25,7 +25,19 @@ def fullData(collection):
         return jsonify([]),  404
     return jsonify(response)
 
-
+def getCrimeData(collection, attr):
+    query = dict()
+    if attr in ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']:
+        query["MCI"]=attr
+    # print(query)
+    try:
+        client = MongoClient(db_connection_string)
+        response = list(client.ETLInsights[collection].find(query, {'_id':0}))
+        client.close()
+    except:
+        client.close()
+        return jsonify([]),  404
+    return jsonify(response)
 
 @app.route('/availableRental')
 def getcurrentRental():
