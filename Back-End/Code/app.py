@@ -74,6 +74,34 @@ def RentalData(collection, args):
         return jsonify([]),  404
     return jsonify(response)
 
+def commAssets(collection, args):
+    query = dict()
+    listcategories = ['Community Services',
+            'Education & Employment',
+            'Financial Services',
+            'Food & Housing',
+            'Health Services',
+            'Law & Government',
+            'Transportation']
+    try:
+        if args:
+            category = args.get("category", None) 
+            fsa = args.get("fsa", None)
+            #Construct query
+            if(category or fsa):
+                if category and (category in listcategories):
+                    query["category"]=category
+                if fsa:
+                    query["fsa"]=fsa
+            # print(query)
+        client = MongoClient(db_connection_string)
+        response = list(client.ETLInsights[collection].find(query, {'_id':0}))
+        client.close()
+    except:
+        client.close()
+        return jsonify([]),  404
+    return jsonify(response)
+
 @app.route('/availableRental')
 def getcurrentRental():
     args = request.args.to_dict()
