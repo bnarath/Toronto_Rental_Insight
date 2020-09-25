@@ -6,6 +6,15 @@ import re
 #Configure Flask App
 app = Flask(__name__)
 
+def createQuery(query, arr, attribute):
+    if arr[0] == -1:
+        query[attribute] = {"$lte":arr[1]}
+    elif arr[1] == -1:
+        query[attribute] = {"$gte":arr[0]}
+    else:
+        query[attribute] = {"$lte":arr[1], "$gte":arr[0]}
+    return query
+
 @app.route('/availableRental')
 def getcurrentRental():
     args = request.args.to_dict()
