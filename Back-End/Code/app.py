@@ -102,6 +102,23 @@ def commAssets(collection, args):
         return jsonify([]),  404
     return jsonify(response)
 
+def incomeData(collection, args):
+    query = dict()
+    try:
+        if args:
+            FSA = args.get("FSA", None)
+            #Construct query
+            if FSA:
+                query["FSA"]=FSA
+            # print(query)
+        client = MongoClient(db_connection_string)
+        response = list(client.ETLInsights[collection].find(query, {'_id':0}))
+        client.close()
+    except:
+        client.close()
+        return jsonify([]),  404
+    return jsonify(response)
+
 @app.route('/availableRental')
 def getcurrentRental():
     args = request.args.to_dict()
