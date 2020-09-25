@@ -38,11 +38,12 @@ function createMap (assetArray, rental, crime, data) {
   var streetview = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
           attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
           tileSize: 512,
-          maxZoom: 20,
+          maxZoom: 18,
           zoomOffset: -1,      
           id: "streets-v11",
           accessToken: API_KEY
         });
+
 
   // Create the map object with layers
   var TorontoMap = L.map("map", {
@@ -51,6 +52,11 @@ function createMap (assetArray, rental, crime, data) {
     layers : [streetview, FSA, rental]
   });
 
+  //set limits on zoom
+  TorontoMap.options.maxZoom = 20;
+
+  TorontoMap.options.minZoom = 12;
+
   // Pass map layers into layer control and add the layer control to the map
   L.control.layers(baseMaps, overlayMaps, {collapsed:false}).addTo(TorontoMap);
 
@@ -58,7 +64,9 @@ function createMap (assetArray, rental, crime, data) {
 
   RentalCrimeInteraction(rental, data, TorontoMap)
 
-  return TorontoMap
+  // rental.popupclose()
+    //Your code here
+
 };
 
 function ReadLayersDisplay () {
@@ -143,11 +151,10 @@ function ReadLayersDisplay () {
               d3.csv('static/js/Crime.csv', function(fullcrime){
 
                 var crimeIcon = L.ExtraMarkers.icon({
-                  markerColor: "blue",
-                  icon: "fa-alert-outline",
-                  shape: 'penta',
+                  icon: "ion-person-stalker",
                   iconColor: "white",
-                  prefix: 'fa'
+                  markerColor: "blue",
+                  shape: "penta"
                 });
 
                 var murder = fullcrime.filter(d=>d.MCI=="Homicide");
@@ -288,6 +295,10 @@ function RentalCrimeInteraction(rentalMarkerGroup, data, map){
         obj.on('click', function(e) {
           // marker clicked is e.target
        
+          if(intCrimeMarkerGroup) {
+            map.removeLayer(intCrimeMarkerGroup);
+          };
+
           // remove active circle if any
           if(activeCircle) {
             map.removeLayer(activeCircle);
@@ -295,48 +306,42 @@ function RentalCrimeInteraction(rentalMarkerGroup, data, map){
           // draw a 1km circle with the same center as the marker 
           activeCircle = L.circle(e.target.getLatLng(), { 
             radius: radius ,
-             fillColor: "grey",
-
+             fillColor: "grey"
              }).addTo(map);
 
           r = activeCircle.getRadius(); //in meters
-          circleCenterPoint = activeCircle.getLatLng(); //gets the circle's center latlng
-          if(intCrimeMarkerGroup) {
-            map.removeLayer(intCrimeMarkerGroup);
-          }
 
-          crimeMarkers = []
+          circleCenterPoint = activeCircle.getLatLng(); //gets the circle's center latlng
+          
+
+
+          allCrimeMarkers = [];
 
           for (var i = 0; i < data.length; i++) {
             isInCircleRadius = Math.abs(circleCenterPoint.distanceTo([data[i].lat, data[i].long])) <= r;
             
             var crimeIcon = L.ExtraMarkers.icon({
               markerColor: crimeColors(data[i].MCI),
-              icon: "fa-alert-outline",
-              shape: 'penta',
+              icon: crimeIcons(data[i].MCI),
               iconColor: "white",
-              prefix: 'fa'
+              shape: "penta"          
             });
 
             // add marker only if the point is within the area
             if (isInCircleRadius) {
-              crimeMarkers.push(L.marker([data[i].lat, data[i].long], {
-                radius: 50,
+              allCrimeMarkers.push(L.marker([data[i].lat, data[i].long], {
                 icon: crimeIcon
               }).bindPopup(data[i].MCI));
 
-            crimeMarkers.getPopup().on('remove', function() {
-                //Your code here
-            });
             }
-          intcrimeMarkerGroup = L.layerGroup(crimeMarkers).addTo(map);
+          intcrimeMarkerGroup = L.layerGroup(allCrimeMarkers).addTo(map);
           }
 
         });
     });
   };
 
-  // function for styling community assets
+  // function for styling crime marker
 
 function crimeColors(type){
   switch (type) {
@@ -357,3 +362,26 @@ function crimeColors(type){
     }
   
 };
+
+  // function for styling crime icons
+
+  function crimeIcons(type){
+    switch (type) {
+      case "Assault":
+        return "ion-person-stalker";
+      case "Auto Theft":
+        return "ion-android-car";
+      case "Break and Enter":
+        return "ion-android-home";
+      case "Homicide":
+        return "ion-alert";
+      case "Robbery":
+        return "ion-android-hand";
+      case "Theft Over":
+          return "ion-android-hand";
+      default:
+        return "ion-alert";
+      }
+  };
+
+  
