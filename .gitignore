@@ -2,6 +2,7 @@
 urls_list.py
 config.py
 config.js
+cron.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
