@@ -15,6 +15,18 @@ def createQuery(query, arr, attribute):
         query[attribute] = {"$lte":arr[1], "$gte":arr[0]}
     return query
 
+def fullData(collection):
+    try:
+        client = MongoClient(db_connection_string)
+        response = list(client.ETLInsights[collection].find({}, {'_id':0}))
+        client.close()
+    except:
+        client.close()
+        return jsonify([]),  404
+    return jsonify(response)
+
+
+
 @app.route('/availableRental')
 def getcurrentRental():
     args = request.args.to_dict()
