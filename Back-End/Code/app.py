@@ -119,6 +119,7 @@ def incomeData(collection, args):
         return jsonify([]),  404
     return jsonify(response)
 
+
 @app.route('/availableRental')
 def getcurrentRental():
     args = request.args.to_dict()
