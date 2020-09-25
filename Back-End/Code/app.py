@@ -39,6 +39,41 @@ def getCrimeData(collection, attr):
         return jsonify([]),  404
     return jsonify(response)
 
+def RentalData(collection, args):
+    query = dict()
+    try:
+        if args:
+            sqft = args.get("sqft", None) #If min or max are null, give -1
+            price = args.get("price", None) #If min or max are null, give -1
+            FSA = args.get("FSA", None) 
+            bedrooms = args.get("bedrooms", None) #If min or max are null, give -1
+            bathrooms = args.get("bathrooms", None) #If min or max are null, give -1
+            #Construct query
+            if(sqft or price or FSA or bedrooms or bathrooms):
+                if sqft:
+                    sqft =  [int(val) for val in re.sub('[\[\]]', '', sqft).split(',')]
+                    query = createQuery(query, sqft, "sqft")
+                if price:
+                    price = [int(val) for val in re.sub('[\[\]]', '', price).split(',')]
+                    query = createQuery(query, price, "price")
+                if bedrooms:
+                    bedrooms = [int(val) for val in  re.sub('[\[\]]', '', bedrooms).split(',')]
+                    query = createQuery(query, bedrooms, "bedrooms")
+                if bathrooms:
+                    bathrooms = [int(val) for val in re.sub('[\[\]]', '', bathrooms).split(',')]
+                    query = createQuery(query, bathrooms, "bathrooms")
+                if FSA:
+                    query["FSA"] = FSA
+            # print(query)
+    
+        client = MongoClient(db_connection_string)
+        response = list(client.ETLInsights[collection].find(query, {'_id':0}))
+        client.close()
+    except:
+        client.close()
+        return jsonify([]),  404
+    return jsonify(response)
+
 @app.route('/availableRental')
 def getcurrentRental():
     args = request.args.to_dict()
