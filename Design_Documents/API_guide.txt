@@ -1,0 +1,45 @@
+API Services and How to use them ?
+#######################################################
+# Rental Data
+Example
+https://etlinsightapi.herokuapp.com/availableRental?sqft=[1000,-1]&price=[1500,2500]&bedrooms=[2,-1]&bathrooms=[1,-1]&FSA=M4E
+Note
+A range need to be mentioned for sqft, price, bedrooms and bathrooms; If no min or max, use -1; Eg >=2 bedrooms => bedrooms=[2, -1]
+
+Static end points:
+https://etlinsightapi.herokuapp.com/availableRental
+https://etlinsightapi.herokuapp.com/rentalTrend
+#######################################################
+# Crime Data
+Example
+https://etlinsightapi.herokuapp.com/crimeLastYear?MCI=Break%20and%20Enter
+
+Options for MCI
+['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
+
+Static end point:
+https://etlinsightapi.herokuapp.com/crimeLastYear
+https://etlinsightapi.herokuapp.com/crimeLastSixMonths
+#######################################################
+# Community Assets Data
+Example
+https://etlinsightapi.herokuapp.com/communityAssets?category=Food%20%26%20Housing&fsa=M1P
+
+Options for category
+['Community Services','Education & Employment','Financial Services','Food & Housing','Health Services','Law & Government','Transportation']
+
+Note:
+Replace & with %26 in URL
+
+Static end point:
+https://etlinsightapi.herokuapp.com/communityAssets
+
+#######################################################
+# FSA income
+Example
+https://etlinsightapi.herokuapp.com/fsaIncome?FSA=M4E
+
+Static end point:
+https://etlinsightapi.herokuapp.com/fsaIncome
+
+
