@@ -25,6 +25,20 @@ def fullData(collection):
         return jsonify([]),  404
     return jsonify(response)
 
+def getCrimeData(collection, attr):
+    query = dict()
+    if attr in ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']:
+        query["MCI"]=attr
+    # print(query)
+    try:
+        client = MongoClient(db_connection_string)
+        response = list(client.ETLInsights[collection].find(query, {'_id':0}))
+        client.close()
+    except:
+        client.close()
+        return jsonify([]),  404
+    return jsonify(response)
+
 def RentalData(collection, args):
     query = dict()
     try:
@@ -77,11 +91,19 @@ def gethistoricRental():
     # http://127.0.0.1:5000/rentalTrend?sqft=[1000,-1]&price=[1500,2500]&bedrooms=[2,-1]&bathrooms=[1,-1]&FSA=M4E 
     # return fullData("HistoricRental")
 @app.route('/crimeLastYear')
-def getcrime():
-    return fullData("Crime")
+def getcrimeDynamic():
+    attr = request.args.get("MCI")
+    return getCrimeData("Crime", attr)
+    # Options
+    # ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
+    # http://127.0.0.1:5000/crimeLastYear?MCI=Break%20and%20Enter
 @app.route('/crimeLastSixMonths')
 def getcrimeShort():
-    return fullData("CrimeLastSixMonths")
+    attr = request.args.get("MCI")
+    return getCrimeData("CrimeLastSixMonths", attr)
+    # Options
+    # ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
+    # http://127.0.0.1:5000/crimeLastSixMonths?MCI=Break%20and%20Enter
 @app.route('/communityAssets')
 def getcommAssets():
     return fullData("CommunityAssets")
