@@ -67,10 +67,7 @@ def RentalData(collection, args):
             # print(query)
     
         client = MongoClient(db_connection_string)
-        if query:
-            response = list(client.ETLInsights[collection].find(query, {'_id':0}))
-        else:
-            response = list(client.ETLInsights[collection].find({}, {'_id':0}))
+        response = list(client.ETLInsights[collection].find(query, {'_id':0}))
         client.close()
     except:
         client.close()
@@ -96,12 +93,26 @@ def commAssets(collection, args):
                     query["category"]=category
                 if fsa:
                     query["fsa"]=fsa
-            print(query)
+            # print(query)
         client = MongoClient(db_connection_string)
-        if query:
-            response = list(client.ETLInsights[collection].find(query, {'_id':0}))
-        else:
-            response = list(client.ETLInsights[collection].find({}, {'_id':0}))
+        response = list(client.ETLInsights[collection].find(query, {'_id':0}))
+        client.close()
+    except:
+        client.close()
+        return jsonify([]),  404
+    return jsonify(response)
+
+def incomeData(collection, args):
+    query = dict()
+    try:
+        if args:
+            FSA = args.get("FSA", None)
+            #Construct query
+            if FSA:
+                query["FSA"]=FSA
+            # print(query)
+        client = MongoClient(db_connection_string)
+        response = list(client.ETLInsights[collection].find(query, {'_id':0}))
         client.close()
     except:
         client.close()
@@ -139,19 +150,17 @@ def getcrimeShort():
 @app.route('/communityAssets')
 def getcommAssets():
     args = request.args.to_dict()
-    print(args)
+    # print(args)
     return commAssets("CommunityAssets", args)
     # ['Community Services','Education & Employment','Financial Services','Food & Housing','Health Services','Law & Government','Transportation']
     # http://127.0.0.1:5000/communityAssets?category=Food%20%26%20Housing&fsa=M1P#
 
 @app.route('/fsaIncome')
 def getFSAIncome():
-    return fullData("FSAIncome")
-
+    args = request.args.to_dict()
+    return incomeData("FSAIncome", args)
+    # http://127.0.0.1:5000/fsaIncome?FSA=M4E
         
-        
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
