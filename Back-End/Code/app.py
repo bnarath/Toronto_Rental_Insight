@@ -77,6 +77,38 @@ def RentalData(collection, args):
         return jsonify([]),  404
     return jsonify(response)
 
+def commAssets(collection, args):
+    query = dict()
+    listcategories = ['Community Services',
+            'Education & Employment',
+            'Financial Services',
+            'Food & Housing',
+            'Health Services',
+            'Law & Government',
+            'Transportation']
+    try:
+        if args:
+            category = args.get("category", None) 
+            fsa = args.get("fsa", None)
+            #Construct query
+            if(category or fsa):
+                if category and (category in listcategories):
+                    query["category"]=category
+                if fsa:
+                    query["fsa"]=fsa
+            print(query)
+        client = MongoClient(db_connection_string)
+        if query:
+            response = list(client.ETLInsights[collection].find(query, {'_id':0}))
+        else:
+            response = list(client.ETLInsights[collection].find({}, {'_id':0}))
+        client.close()
+    except:
+        client.close()
+        return jsonify([]),  404
+    return jsonify(response)
+
+
 @app.route('/availableRental')
 def getcurrentRental():
     args = request.args.to_dict()
@@ -106,7 +138,12 @@ def getcrimeShort():
     # http://127.0.0.1:5000/crimeLastSixMonths?MCI=Break%20and%20Enter
 @app.route('/communityAssets')
 def getcommAssets():
-    return fullData("CommunityAssets")
+    args = request.args.to_dict()
+    print(args)
+    return commAssets("CommunityAssets", args)
+    # ['Community Services','Education & Employment','Financial Services','Food & Housing','Health Services','Law & Government','Transportation']
+    # http://127.0.0.1:5000/communityAssets?category=Food%20%26%20Housing&fsa=M1P#
+
 @app.route('/fsaIncome')
 def getFSAIncome():
     return fullData("FSAIncome")
