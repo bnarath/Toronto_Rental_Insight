@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta charset="utf-8">
+  <title>PointInCircle</title>
+
+  <!-- Bootstrap css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!--Font awesome for icons-->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="static/css/style.css">
+  <!--Sidebar CSS-->
+  <link rel="stylesheet" href="static/css/leaflet-sidebar.css" />
+
+  <!--Sidebar style-->
+  <style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    html, body, #map {
+        height: 100%;
+        font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+    }
+
+    .lorem {
+        font-style: italic;
+        color: #AAA;
+    }
+</style>
+
+</head>
+<body>
+  
+  <div id="sidebar" class="sidebar collapsed">
+    <!-- Nav tabs -->
+    <div class="sidebar-tabs">
+        <ul role="tablist">
+            <li><a href="#rental" role="tab"><i class="fa fa-building" alt="Rental Trends"></i></a>Rental Trends</li>
+            <li><a href="#crime" role="tab"><i class="fa fa-bomb" aria-hidden="true"></i>Crime Trends</a></li>
+            <li><a href="#filter" role="tab"><i class="fa fa-filter"></i>Filter</a></li>
+            <li><a href="https://github.com/bnarath/Toronto_Rental_Insight" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>
+        </ul>
+
+        <!-- <ul role="tablist">
+            <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+        </ul> -->
+    </div>
+
+    <!-- Tab panes -->
+    <div class="sidebar-content">
+        <div class="sidebar-pane" id="rental">
+            <h1 class="sidebar-header">
+                Rental Trends
+                <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <form>
+              <br>
+              <br>
+              <label for="FSA_rent">Select FSA:</label>
+              <select name="fsa" id="fsa_rent">
+              </select>
+              <div id="bar_rent"></div>
+              
+              
+            </form>
+            
+            </div>
+
+        <div class="sidebar-pane" id="crime">
+            <h1 class="sidebar-header">Crime Rate Insights<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <form>
+              <br>
+              <br>
+              <label for="FSA_crime">Choose an FSA:</label>
+              <select name="fsa" id="fsa_crime">
+              </select>
+              <div id="bar_crime"></div>
+              <div id="bubble_crime"></div>
+              <!--<div id="map-id"></div>-->
+              
+              
+            </form>
+        </div>
+
+        <div class="sidebar-pane" id="filter">
+            <h1 class="sidebar-header">Filter<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <form>
+              <br>
+              <br>
+              
+              <i class="fa fa-usd" aria-hidden="true"></i><label for="price"> Select price range:</label><br>
+                    <label for="price_min">Min:</label>
+                    <select name="min_price" id="min price">
+                      <option value="AllFSA">All FSA</option>
+                      <option value="option1">option1</option>
+                      <option value="option2">option2</option>
+                      <option value="option3">option3</option>
+                    </select>
+                  
+                    <label for="price_max">Max:</label>
+                    <select name="price_max" id="price_max">
+                      <option value="AllFSA">All FSA</option>
+                      <option value="option1">option1</option>
+                      <option value="option2">option2</option>
+                      <option value="option3">option3</option>
+                    </select><br>
+                  
+                    <i class="fa fa-bed" aria-hidden="true"></i><label for="bedrooms"> No of Bedrooms:</label>
+                    <select name="bedrooms" id="bedrooms">
+                      <option value="AllFSA">All FSA</option>
+                      <option value="option1">option1</option>
+                      <option value="option2">option2</option>
+                      <option value="option3">option3</option>
+                    </select><br>
+                  
+                    <i class="fa fa-shower" aria-hidden="true"></i><label for="bathrooms"> No of Bathrooms:</label>
+                    <select name="bathrooms" id="bathrooms">
+                      <option value="AllFSA">All FSA</option>
+                      <option value="option1">option1</option>
+                      <option value="option2">option2</option>
+                      <option value="option3">option3</option>
+                    </select>  
+                  
+            </form>
+           
+        </div>
+
+        <div class="sidebar-pane" id="rentalListing">
+            <h1 class="sidebar-header">Rental Listing Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+        </div>
+        <div class="sidebar-pane" id="communityListing">
+          <h1 class="sidebar-header">Community Asset Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+      </div>
+    </div>
+</div>
+  <div id="map-id" class="sidebar-map"></div>
+  
+
+  
+  <!-- Bootstrap js -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <!-- D3 JavaScript -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <!-- Placeholder for other plugins  -->
+  <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
+  
+  <!-- Our JavaScripts -->
+  <script type="text/javascript" src="static/js/config.js"></script>
+  <script type="text/javascript" src="static/js/logic.js"></script>
+  <!--Sidebar JavaScript-->
+  <script src="static/js/leaflet-sidebar.js"></script>
+  <!--Plotly scripts-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!--our visualivations using plotly scripts-->
+  <script src="static/js/app.js"></script>
+</body>
+</html>
