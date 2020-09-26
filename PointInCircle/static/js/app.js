@@ -42,7 +42,9 @@ function init(){
             //orientation: "h", //horizontal bar
             text: objectList[0]["otuLabels"].slice(0,10).reverse() //hovertext
         }];
-        var layout={ title: "Belly Bacteria population"};
+        var layout={autosize: false,
+            width: 450,
+            height: 500, title: "Average Crime Per FSA"};
         //plot graph
         Plotly.newPlot("bar_crime", data, layout);
         //select dropdown menu 
@@ -71,7 +73,10 @@ function init(){
             //orientation: "h", //horizontal bar
             text: objectList[0]["otuLabels"].slice(0,10).reverse() //hovertext
         }];
-        var layout={ title: "Belly Bacteria population"};
+        var layout={autosize: false,
+            width: 450,
+            height: 500,
+            title: "Belly Bacteria population"};
         //plot graph
         Plotly.newPlot("bar_rent", data, layout);
         //select dropdown menu 
@@ -80,39 +85,39 @@ function init(){
         otuPersonId.forEach(element => {
             dropDown.append("option").text(element);
         });
-        // //create data for bubble chart
-        // var data=[{
-        //     x: otuIds[0], //Use `otu_ids` for the x values.
-        //     y: sampleValues[0], //Use `sample_values` for the y values.
-        //     mode: "markers",
-        //     marker:{
-        //         size: sampleValues[0], //Use `sample_values` for the marker size.
-        //         color: otuIds[0] //Use `otu_ids` for the marker colors.
-        //     },
-        //     text: otuLabels[0] //Use `otu_labels` for the text values
-        // }];
-        // var layout={ title: "Belly Bacteria Population",
-        //     xaxis:{title: "OTU ID"},
-        //     yaxis:{title: "Values"}
-        // };
-        // //Plot intial Bubble chart
-        // Plotly.newPlot("bubble", data, layout); 
-        // //get metadata 
-        // var ethnicity= metadata[0]["ethnicity"];
-        // var gender= metadata[0]["gender"];
-        // var age= metadata[0]["age"];
-        // var location= metadata[0]["location"];
-        // var bbtype= metadata[0]["bbtype"];
-        // var wfreq= metadata[0]["wfreq"];
-        // //add metadata to html
-        // metadataHtml =d3.select("#sample-metadata");
-        // metadataHtml.append("p").text("Id: "+otuPersonId[0]);
-        // metadataHtml.append("p").text("Ethnicity: "+ethnicity);
-        // metadataHtml.append("p").text("Gender: "+gender);
-        // metadataHtml.append("p").text("Age: "+age);
-        // metadataHtml.append("p").text("Location: "+location);
-        // metadataHtml.append("p").text("bbtype: "+bbtype);
-        // metadataHtml.append("p").text("wfreq: "+wfreq);
+        //create data for bubble chart
+        var data=[{
+            x: otuIds[0], //Use `otu_ids` for the x values.
+            y: sampleValues[0], //Use `sample_values` for the y values.
+            mode: "markers",
+            marker:{
+                size: sampleValues[0], //Use `sample_values` for the marker size.
+                color: otuIds[0] //Use `otu_ids` for the marker colors.
+            },
+            text: otuLabels[0] //Use `otu_labels` for the text values
+        }];
+        var layout={width: 400, height: 800, title: "Crime Rate in ${FSA}",
+            xaxis:{title: "OTU ID"},
+            yaxis:{title: "Values"}
+        };
+        //Plot intial Bubble chart
+        Plotly.newPlot("bubble_crime", data, layout); 
+        //get metadata 
+        var ethnicity= metadata[0]["ethnicity"];
+        var gender= metadata[0]["gender"];
+        var age= metadata[0]["age"];
+        var location= metadata[0]["location"];
+        var bbtype= metadata[0]["bbtype"];
+        var wfreq= metadata[0]["wfreq"];
+        //add metadata to html
+        metadataHtml =d3.select("#sample-metadata");
+        metadataHtml.append("p").text("Id: "+otuPersonId[0]);
+        metadataHtml.append("p").text("Ethnicity: "+ethnicity);
+        metadataHtml.append("p").text("Gender: "+gender);
+        metadataHtml.append("p").text("Age: "+age);
+        metadataHtml.append("p").text("Location: "+location);
+        metadataHtml.append("p").text("bbtype: "+bbtype);
+        metadataHtml.append("p").text("wfreq: "+wfreq);
         // //gauge chart
         // var data = [
         //     {
@@ -157,17 +162,17 @@ d3.select("#fsa_crime").on("change", function(){
     Plotly.restyle("bar_crime", "x", [x]);
     Plotly.restyle("bar_crime", "y", [y]);
     Plotly.restyle("bar", "text", [text]);
-    // //update bubble chart
-    // x= otuIds[i];
-    // y= sampleValues[i];
-    // var size= sampleValues[i];
-    // var color= otuIds[i];
-    // text= otuLabels[i];
-    // Plotly.restyle("bubble", "x", [x]);
-    // Plotly.restyle("bubble", "y", [y]);
-    // Plotly.restyle("bubble", "size", [size]);
-    // Plotly.restyle("bubble", "color", [color]);
-    // Plotly.restyle("bubble", "text", [text]);
+    //update bubble chart
+    x= otuIds[i];
+    y= sampleValues[i];
+    var size= sampleValues[i];
+    var color= otuIds[i];
+    text= otuLabels[i];
+    Plotly.restyle("bubble", "x", [x]);
+    Plotly.restyle("bubble", "y", [y]);
+    Plotly.restyle("bubble", "size", [size]);
+    Plotly.restyle("bubble", "color", [color]);
+    Plotly.restyle("bubble", "text", [text]);
     // //update demographics data
     // //get metadata 
     // var ethnicity= metadata[i]["ethnicity"];

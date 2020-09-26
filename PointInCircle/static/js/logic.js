@@ -60,6 +60,8 @@ function CreateMap(rental, crime){
           // marker clicked is e.target
           //print to console
           console.log("Here");
+          sidebar= d3.select("#sidebar");
+          sidebar.setContent('test <b>test</b> test');
           // remove active circle if any
           if(activeCircle) {
             map.removeLayer(activeCircle);
