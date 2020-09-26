@@ -2,7 +2,6 @@
 .legend {
   line-height: 30px;
   color: #555;
-  font-size: px;
   background-color: white;
   padding: 10px;
 }
@@ -32,11 +31,12 @@ html {
   height: 100%;
 }
 
-.leaflet-control-layers-list{
+.leaflet-control-layers{
   font-size: 20px;
+  color: #555;
 }
 
-.leaflet-popup-content {
+.leaflet-popup-content{
   font-size: 20px;
   width: 100px;
 }
@@ -50,3 +50,4 @@ html {
 .leaflet-control{
   font-size: 20px;
 }
+

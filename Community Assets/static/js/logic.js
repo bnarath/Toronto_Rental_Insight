@@ -1,4 +1,4 @@
-function createMap (assetArray, rental, crime, data) {
+function createMap (assetArray, rental, crime, data, incomeChloropleuth) {
 
   //create fsa layer from FSA geoJSON file
 
@@ -18,6 +18,7 @@ function createMap (assetArray, rental, crime, data) {
 
     // Create an overlayMaps object to hold the community asset layer
   var overlayMaps = {
+      "Average Income" : incomeChloropleuth,
       "Community Services" : assetArray[0],
       "Education & Employment": assetArray[1],
       "Financial Services" : assetArray[2],
@@ -58,22 +59,19 @@ function createMap (assetArray, rental, crime, data) {
   TorontoMap.options.minZoom = 12;
 
   // Pass map layers into layer control and add the layer control to the map
-  L.control.layers(baseMaps, overlayMaps, {collapsed:false}).addTo(TorontoMap);
+  L.control.layers(baseMaps, overlayMaps, {collapsed:true}).addTo(TorontoMap);
 
   mapLegend(TorontoMap)
 
   RentalCrimeInteraction(rental, data, TorontoMap)
 
-  // rental.popupclose()
-    //Your code here
-
 };
 
 function ReadLayersDisplay () {
 
-    //create fsa layer from geoJSON file
+    //create community asset layers
 
-  var communityAssetpath = "static/js/community_assets_with_cooridnates.csv";
+    var communityAssetpath = "static/js/community_assets_with_cooridnates.csv";
 
   var servicesAsset = new L.LayerGroup();
   var healthAsset = new L.LayerGroup();
@@ -83,9 +81,9 @@ function ReadLayersDisplay () {
   var educationAsset = new L.LayerGroup();
   var financialAsset = new L.LayerGroup();
 
-  d3.csv(communityAssetpath, d => {
-
-      d.forEach(row=> {
+  d3.csv(communityAssetpath, function(data){
+      
+      data.forEach(row=> {
 
         var lat = parseFloat(row.latitude).toFixed(10);
         var long = parseFloat(row.longitude).toFixed(10);
@@ -121,6 +119,23 @@ function ReadLayersDisplay () {
                       financialAsset, foodAsset, 
                       healthAsset, lawAsset, transportAsset]
 
+
+     //create FSA choropleuth from income data
+
+    var averageIncome = [];
+        
+    // create array of average income and FSA
+    d3.csv('static/js/Toronto_FSA.csv', function(incomeData){
+        
+      incomeData.forEach(row =>{
+        
+        var FSA = row.FSA;
+        var avg = row.Average_Income;
+          
+        averageIncome.push( {FSA : FSA, avgIncome : avg})
+      });
+    });
+
           //read rental posting dataset
           d3.csv('static/js/Rental_Craigslist.csv', function(rental){
 
@@ -151,7 +166,7 @@ function ReadLayersDisplay () {
               d3.csv('static/js/Crime.csv', function(fullcrime){
 
                 var crimeIcon = L.ExtraMarkers.icon({
-                  icon: "ion-person-stalker",
+                  icon: "ion-alert",
                   iconColor: "white",
                   markerColor: "blue",
                   shape: "penta"
@@ -159,6 +174,7 @@ function ReadLayersDisplay () {
 
                 var murder = fullcrime.filter(d=>d.MCI=="Homicide");
 
+                //create markers 
                 murder.forEach(row => {
                   CrimeMarkers.push(L.marker([row.lat, row.long],{
                     icon: crimeIcon
@@ -166,15 +182,34 @@ function ReadLayersDisplay () {
                 
                 });
                 
+                //create layer
                 var CrimeMarkerGroup = L.layerGroup(CrimeMarkers);
 
-                createMap(assetArray, rentalMarkerGroup, CrimeMarkerGroup, fullcrime);
+                //create income level layer
                 
-              });
+                var incomeMarkers = [];
+
+                var FSAPath = "static/js/Toronto2.geojson";
+
+                var incomeMarkersgroup = new L.LayerGroup();
+
+                d3.json(FSApath, function(data) {
+
+                  L.geoJSON(data, {
+                    fillColor: incomeColors(properties.CFSAUID),
+                    color: "grey",
+                    fillOpacity: 0
+                    }).addTo(incomeMarkerGroup)
+
+                    });
+                   
+                createMap(assetArray, rentalMarkerGroup, CrimeMarkerGroup, fullcrime, incomeMarkerGroup);
+                
+              
           });
-    });
+       });
 
-
+      });
 };
 
 ReadLayersDisplay ();
@@ -257,7 +292,7 @@ function markerAllocation(agencyName, category, lat, long, array){
       radius: 90
       });
 
-    marker.bindTooltip(`<h2> ${agencyName}</h2>`);
+    marker.bindPopup(agencyName);
     
     // Add the marker to array
     array.addLayer(marker);
@@ -306,15 +341,14 @@ function RentalCrimeInteraction(rentalMarkerGroup, data, map){
           // draw a 1km circle with the same center as the marker 
           activeCircle = L.circle(e.target.getLatLng(), { 
             radius: radius ,
-             fillColor: "grey"
+             fillColor: "grey",
+             color: "grey"
              }).addTo(map);
 
           r = activeCircle.getRadius(); //in meters
 
           circleCenterPoint = activeCircle.getLatLng(); //gets the circle's center latlng
           
-
-
           allCrimeMarkers = [];
 
           for (var i = 0; i < data.length; i++) {
@@ -331,18 +365,17 @@ function RentalCrimeInteraction(rentalMarkerGroup, data, map){
             if (isInCircleRadius) {
               allCrimeMarkers.push(L.marker([data[i].lat, data[i].long], {
                 icon: crimeIcon
-              }).bindPopup(data[i].MCI));
+              }).bindPopup(data[i].MCI)
+              );
+            };
+        };
 
-            }
-          intcrimeMarkerGroup = L.layerGroup(allCrimeMarkers).addTo(map);
-          }
-
+            intCrimeMarkerGroup = L.layerGroup(allCrimeMarkers).addTo(map);
+          });
         });
-    });
   };
 
-  // function for styling crime marker
-
+// function for styling crime marker colors
 function crimeColors(type){
   switch (type) {
     case "Assault":
@@ -350,7 +383,7 @@ function crimeColors(type){
     case "Auto Theft":
       return "red";
     case "Break and Enter":
-      return "orange";
+      return "orange-dark";
     case "Homicide":
       return "blue";
     case "Robbery":
@@ -364,7 +397,6 @@ function crimeColors(type){
 };
 
   // function for styling crime icons
-
   function crimeIcons(type){
     switch (type) {
       case "Assault":
@@ -384,4 +416,53 @@ function crimeColors(type){
       }
   };
 
-  
+//income choropleuth color function 
+
+function incomeColors(value){
+
+  var Path = "static/js/Toronto_FSA";
+
+  var holderIncomeAvg = 0;
+
+  d3.csv(FSAPath, function(data) {
+      
+      data.forEach(d =>{
+
+      if(d.FSA == value){
+          holderIncomeAvg = d.avgIncome
+         }
+       else{};
+      });
+  });
+
+  if (holderIncomeAvg < 20000){
+    return "#C9A4E4";
+  }
+  else if(holderIncomeAvg => 20000 && value <30000){
+    return "#A365D1";
+  }
+  else if(holderIncomeAvg => 30000 && value <40000){
+    return "#7A34AE";
+  }
+  else if(holderIncomeAvg => 40000 && value <50000){
+    return "#7A34AE";
+  }
+  else if(holderIncomeAvg => 50000 && value <60000){
+    return "#7A34AE";
+  }
+  else if(holderIncomeAvg => 60000 && value <70000){
+    return "#7A34AE";
+  }
+  else if(holderIncomeAvg=> 70000){
+    return "#7A34AE";
+  }
+  else{
+    return null;
+  }
+};
+
+// var test = "https://etlinsightapi.herokuapp.com/crimeLastYear"
+
+// d3.json(test, function(data){
+//   console.log(data)
+// })
