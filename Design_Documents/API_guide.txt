@@ -20,6 +20,7 @@ Options for MCI
 Static end point:
 https://etlinsightapi.herokuapp.com/crimeLastYear
 https://etlinsightapi.herokuapp.com/crimeLastSixMonths
+https://etlinsightapi.herokuapp.com/CrimeLastThreeMonths
 #######################################################
 # Community Assets Data
 Example
