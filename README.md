@@ -52,6 +52,20 @@ Schedules scraping every day at 12 AM EDT
   - Marks the rental postings unavailable once taken off
 - **API endpoints:** Hosts the API endpoints
 
+```diff
+2020-09-26T04:30:00.001509+00:00 app[clock.1]: Started updateDB
+2020-09-26T04:34:04.395572+00:00 app[clock.1]: Finished craigs_list_api_call
+2020-09-26T04:34:05.423526+00:00 app[clock.1]: Finished differencer
+2020-09-26T04:34:06.736165+00:00 app[clock.1]: Finished instatiate_driver
+2020-09-26T04:34:13.404711+00:00 app[clock.1]: Finished craigs_list_scrape
+2020-09-26T04:34:13.434493+00:00 app[clock.1]: Finished clean_craigslist
+2020-09-26T04:34:13.448337+00:00 app[clock.1]: Finished geocode
+2020-09-26T04:34:13.924970+00:00 app[clock.1]: Finished fill_Lat_Long
+2020-09-26T04:34:13.953593+00:00 app[clock.1]: Finished clean_rental_for_merg
+2020-09-26T04:34:14.026133+00:00 app[clock.1]: Finished updateDB
+2020-09-26T04:34:14.033489+00:00 app[clock.1]: Finished Updating the DB
+```
+
 ### FrontEnd
 FrontEnd Consists of the `HTML/CSS/Javascript stack`. Javscript retrieves the data from the APIs hosted by Flask based on user's selection 
 
