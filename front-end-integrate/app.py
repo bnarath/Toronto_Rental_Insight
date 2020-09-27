@@ -1,11 +1,16 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from pymongo import MongoClient
 from urls_list import  db_connection_string
 import re
 
+
 #Configure Flask App
 app = Flask(__name__)
 
+@app.route('/')
+def home_page():  
+    return render_template('index.html', name='home_page')
+    
 def createQuery(query, arr, attribute):
     if arr[0] == -1:
         query[attribute] = {"$lte":arr[1]}
@@ -141,12 +146,19 @@ def getcrimeDynamic():
     # ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
     # http://127.0.0.1:5000/crimeLastYear?MCI=Break%20and%20Enter
 @app.route('/crimeLastSixMonths')
-def getcrimeShort():
+def getcrimeShortSixMonths():
     attr = request.args.get("MCI")
     return getCrimeData("CrimeLastSixMonths", attr)
     # Options
     # ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
     # http://127.0.0.1:5000/crimeLastSixMonths?MCI=Break%20and%20Enter
+@app.route('/CrimeLastThreeMonths')
+def getcrimeShortThreeMonths():
+    attr = request.args.get("MCI")
+    return getCrimeData("CrimeLastThreeMonths", attr)
+    # Options
+    # ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
+    # http://127.0.0.1:5000/CrimeLastThreeMonths?MCI=Break%20and%20Enter
 @app.route('/communityAssets')
 def getcommAssets():
     args = request.args.to_dict()
@@ -155,11 +167,11 @@ def getcommAssets():
     # ['Community Services','Education & Employment','Financial Services','Food & Housing','Health Services','Law & Government','Transportation']
     # http://127.0.0.1:5000/communityAssets?category=Food%20%26%20Housing&fsa=M1P#
 
-@app.route('/fsaIncome')
-def getFSAIncome():
+@app.route('/fsaIncomeAge')
+def getFSAIncomeAge():
     args = request.args.to_dict()
-    return incomeData("FSAIncome", args)
-    # http://127.0.0.1:5000/fsaIncome?FSA=M4E
+    return incomeData("FSAIncomeAge", args)
+    # http://127.0.0.1:5000/fsaIncomeAge?FSA=M4E
         
 
 if __name__ == "__main__":
