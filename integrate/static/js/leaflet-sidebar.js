@@ -17,6 +17,7 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
     },
 
     initialize: function (id, options) {
+        console.log("Initialize");
         var i, child;
 
         L.setOptions(this, options);
@@ -68,6 +69,7 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
      * @returns {Sidebar}
      */
     addTo: function (map) {
+        console.log("addTo");
         var i, child;
 
         this._map = map;
@@ -108,6 +110,7 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
      * @returns {Sidebar}
      */
     remove: function (map) {
+        console.log("remove");
         var i, child;
 
         this._map = null;
@@ -130,7 +133,8 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
      *
      * @param {string} id - The id of the tab to show (without the # character)
      */
-    open: function(id) {
+    open: function(id, j=-1) {
+        console.log(`open, ${id}, ${j}`);
         var i, child;
 
         // hide old active contents and show new content
@@ -166,6 +170,7 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
      * Close the sidebar (if necessary).
      */
     close: function() {
+        console.log("close");
         // remove old active highlights
         for (var i = this._tabitems.length - 1; i >= 0; i--) {
             var child = this._tabitems[i];
@@ -186,6 +191,7 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
      * @private
      */
     _onClick: function() {
+        console.log("onClick");
         if (L.DomUtil.hasClass(this, 'active'))
             this._sidebar.close();
         else if (!L.DomUtil.hasClass(this, 'disabled'))
@@ -196,6 +202,7 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
      * @private
      */
     _onCloseClick: function () {
+        console.log("onCloseClick");
         this.close();
     }
 });
@@ -214,3 +221,29 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
 L.control.sidebar = function (id, options) {
     return new L.Control.Sidebar(id, options);
 };
+
+var MyDemoClass = L.Class.extend({
+
+  // A property with initial value = 42
+  myDemoProperty: 42,   
+
+  // A method 
+  myDemoMethod: function() { return this.myDemoProperty; }
+  
+});
+
+
+
+var MyBoxClass = L.Class.extend({
+
+    options: {
+        width: 1,
+        height: 1
+    },
+
+    initialize: function(name, options) {
+        this.name = name;
+        L.setOptions(this, options);
+    }
+    
+});

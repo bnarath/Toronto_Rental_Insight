@@ -193,17 +193,17 @@ function ReadLayersDisplay () {
 
                 var incomeMarkersgroup = new L.LayerGroup();
 
-                d3.json(FSApath, function(data) {
+                // d3.json(FSAPath, function(data) {
 
-                  L.geoJSON(data, {
-                    fillColor: incomeColors(properties.CFSAUID),
-                    color: "grey",
-                    fillOpacity: 0
-                    }).addTo(incomeMarkerGroup)
+                //   L.geoJSON(data, {
+                //     fillColor: incomeColors(properties.CFSAUID),
+                //     color: "grey",
+                //     fillOpacity: 0
+                //     }).addTo(incomeMarkerGroup)
 
-                    });
+                //     });
                    
-                createMap(assetArray, rentalMarkerGroup, CrimeMarkerGroup, fullcrime, incomeMarkerGroup);
+                // createMap(assetArray, rentalMarkerGroup, CrimeMarkerGroup, fullcrime, incomeMarkersGroup);
                 
               
           });
