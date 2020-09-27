@@ -306,6 +306,7 @@ def clean_rental_for_merge(df):
     DF['id'] = DF['id'].map(lambda x: 'c_'+str(x))
     #Change date
     DF.post_published_date = DF.post_published_date.map(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M").strftime("%Y-%m-%d"))
+    DF.fillna("", inplace=True)
     print("Finished clean_rental_for_merg")  
     return DF
 
