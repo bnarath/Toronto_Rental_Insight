@@ -1,8 +1,18 @@
-function createMap (assetArray, rental, crime, data, incomeChloropleuth) {
+
+
+//test json files
+
+var path = "../static/js/availableRental.json";
+
+d3.json(path, function(data) {
+  console.log(data)
+        });
+
+function createMap (assetArray, rental, crime, data) {
 
   //create fsa layer from FSA geoJSON file
 
-  var FSApath = "static/js/Toronto2.geojson"
+  var FSApath = "../data/Toronto2.geojson"
 
   var FSA = new L.LayerGroup();
 
@@ -18,7 +28,7 @@ function createMap (assetArray, rental, crime, data, incomeChloropleuth) {
 
     // Create an overlayMaps object to hold the community asset layer
   var overlayMaps = {
-      "Average Income" : incomeChloropleuth,
+      //"Average Income" : incomeChloropleuth,
       "Community Services" : assetArray[0],
       "Education & Employment": assetArray[1],
       "Financial Services" : assetArray[2],
@@ -71,7 +81,7 @@ function ReadLayersDisplay () {
 
     //create community asset layers
 
-    var communityAssetpath = "static/js/community_assets_with_cooridnates.csv";
+  var communityAssetpath = "../static/js/communityAssets_test2.json";
 
   var servicesAsset = new L.LayerGroup();
   var healthAsset = new L.LayerGroup();
@@ -81,7 +91,7 @@ function ReadLayersDisplay () {
   var educationAsset = new L.LayerGroup();
   var financialAsset = new L.LayerGroup();
 
-  d3.csv(communityAssetpath, function(data){
+  d3.json(communityAssetpath, function(data){
       
       data.forEach(row=> {
 
@@ -119,25 +129,8 @@ function ReadLayersDisplay () {
                       financialAsset, foodAsset, 
                       healthAsset, lawAsset, transportAsset]
 
-
-     //create FSA choropleuth from income data
-
-    var averageIncome = [];
-        
-    // create array of average income and FSA
-    d3.csv('static/js/Toronto_FSA.csv', function(incomeData){
-        
-      incomeData.forEach(row =>{
-        
-        var FSA = row.FSA;
-        var avg = row.Average_Income;
-          
-        averageIncome.push( {FSA : FSA, avgIncome : avg})
-      });
-    });
-
           //read rental posting dataset
-          d3.csv('static/js/Rental_Craigslist.csv', function(rental){
+          d3.csv('../static/js/Rental_Craigslist.csv', function(rental){
 
               //create rental posting layer
               var rentalMarkers = [];
@@ -163,7 +156,7 @@ function ReadLayersDisplay () {
               var CrimeMarkers = [];
 
               //read crime dataset
-              d3.csv('static/js/Crime.csv', function(fullcrime){
+              d3.csv('../static/js/Crime.csv', function(fullcrime){
 
                 var crimeIcon = L.ExtraMarkers.icon({
                   icon: "ion-alert",
@@ -184,26 +177,8 @@ function ReadLayersDisplay () {
                 
                 //create layer
                 var CrimeMarkerGroup = L.layerGroup(CrimeMarkers);
-
-                //create income level layer
-                
-                var incomeMarkers = [];
-
-                var FSAPath = "static/js/Toronto2.geojson";
-
-                var incomeMarkersgroup = new L.LayerGroup();
-
-                d3.json(FSApath, function(data) {
-
-                  L.geoJSON(data, {
-                    fillColor: incomeColors(properties.CFSAUID),
-                    color: "grey",
-                    fillOpacity: 0
-                    }).addTo(incomeMarkerGroup)
-
-                    });
                    
-                createMap(assetArray, rentalMarkerGroup, CrimeMarkerGroup, fullcrime, incomeMarkerGroup);
+                createMap(assetArray, rentalMarkerGroup, CrimeMarkerGroup, fullcrime);
                 
               
           });
@@ -416,53 +391,28 @@ function crimeColors(type){
       }
   };
 
-//income choropleuth color function 
+// console.log("it worked!!!!!!!")
 
-function incomeColors(value){
+// var test = "http://127.0.0.1:5000/availableRental?sqft=[1000,-1]&price=[1500,2500]&bedrooms=[2,-1]&bathrooms=[1,-1]&FSA=M4E";
 
-  var Path = "static/js/Toronto_FSA";
 
-  var holderIncomeAvg = 0;
+// // d3.json(test, function(data){
+// //   console.log(data)
+// // })
 
-  d3.csv(FSAPath, function(data) {
-      
-      data.forEach(d =>{
-
-      if(d.FSA == value){
-          holderIncomeAvg = d.avgIncome
-         }
-       else{};
-      });
-  });
-
-  if (holderIncomeAvg < 20000){
-    return "#C9A4E4";
-  }
-  else if(holderIncomeAvg => 20000 && value <30000){
-    return "#A365D1";
-  }
-  else if(holderIncomeAvg => 30000 && value <40000){
-    return "#7A34AE";
-  }
-  else if(holderIncomeAvg => 40000 && value <50000){
-    return "#7A34AE";
-  }
-  else if(holderIncomeAvg => 50000 && value <60000){
-    return "#7A34AE";
-  }
-  else if(holderIncomeAvg => 60000 && value <70000){
-    return "#7A34AE";
-  }
-  else if(holderIncomeAvg=> 70000){
-    return "#7A34AE";
-  }
-  else{
-    return null;
-  }
-};
-
-// var test = "https://etlinsightapi.herokuapp.com/crimeLastYear"
+// //var file = "../static/js/crimeLastSixMonths.json"
 
 // d3.json(test, function(data){
-//   console.log(data)
+
+//   data.forEach(element => {
+
+//     console.log(element["MCI"])
+    
+//   });
+//   //console.log(data)
 // })
+
+
+//http://127.0.0.5:59527/Community%20Assets/index.html
+
+//http://127.0.0.1:5000/
