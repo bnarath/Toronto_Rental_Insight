@@ -2,11 +2,11 @@
 
 //test json files
 
-var path = "../static/js/availableRental.json";
+// var path = '../static/js/crimeLastYear.json';
 
-d3.json(path, function(data) {
-  console.log(data)
-        });
+// d3.json(path, function(data) {
+//   console.log(data)
+//         });
 
 function createMap (assetArray, rental, crime, data) {
 
@@ -81,7 +81,7 @@ function ReadLayersDisplay () {
 
     //create community asset layers
 
-  var communityAssetpath = "../static/js/communityAssets_test2.json";
+  var communityAssetpath = `${url}/communityAssets`;
 
   var servicesAsset = new L.LayerGroup();
   var healthAsset = new L.LayerGroup();
@@ -130,7 +130,10 @@ function ReadLayersDisplay () {
                       healthAsset, lawAsset, transportAsset]
 
           //read rental posting dataset
-          d3.csv('../static/js/Rental_Craigslist.csv', function(rental){
+
+          var rentalPath = `${url}availableRental`;
+
+          d3.json(rentalPath, function(rental){
 
               //create rental posting layer
               var rentalMarkers = [];
@@ -156,7 +159,9 @@ function ReadLayersDisplay () {
               var CrimeMarkers = [];
 
               //read crime dataset
-              d3.csv('../static/js/Crime.csv', function(fullcrime){
+              var crimePath = `${url}crimeLastSixMonths`;
+
+              d3.json(crimePath, function(fullcrime){
 
                 var crimeIcon = L.ExtraMarkers.icon({
                   icon: "ion-alert",
@@ -390,29 +395,3 @@ function crimeColors(type){
         return "ion-alert";
       }
   };
-
-// console.log("it worked!!!!!!!")
-
-// var test = "http://127.0.0.1:5000/availableRental?sqft=[1000,-1]&price=[1500,2500]&bedrooms=[2,-1]&bathrooms=[1,-1]&FSA=M4E";
-
-
-// // d3.json(test, function(data){
-// //   console.log(data)
-// // })
-
-// //var file = "../static/js/crimeLastSixMonths.json"
-
-// d3.json(test, function(data){
-
-//   data.forEach(element => {
-
-//     console.log(element["MCI"])
-    
-//   });
-//   //console.log(data)
-// })
-
-
-//http://127.0.0.5:59527/Community%20Assets/index.html
-
-//http://127.0.0.1:5000/

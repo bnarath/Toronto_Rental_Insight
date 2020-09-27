@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 Community Assets/data/config.py
 Community Assets/static/js/config.js
+Community Assets/urls_list.py
