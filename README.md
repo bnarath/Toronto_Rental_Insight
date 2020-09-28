@@ -67,7 +67,6 @@ Schedules scraping every day at 12 AM EDT
 ```
 
 ```diff
-2020-09-28T01:16:54.501292+00:00 app[clock.1]: if setting is None or setting is '':
 2020-09-28T04:34:28.051408+00:00 app[clock.1]: Finished craigs_list_api_call
 2020-09-28T04:34:28.999139+00:00 app[clock.1]: Finished differencer
 2020-09-28T04:34:31.631729+00:00 app[clock.1]: Finished instatiate_driver
