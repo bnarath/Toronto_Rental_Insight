@@ -66,6 +66,19 @@ Schedules scraping every day at 12 AM EDT
 2020-09-26T04:34:14.033489+00:00 app[clock.1]: Finished Updating the DB
 ```
 
+```diff
+2020-09-28T01:16:54.501292+00:00 app[clock.1]: if setting is None or setting is '':
+2020-09-28T04:34:28.051408+00:00 app[clock.1]: Finished craigs_list_api_call
+2020-09-28T04:34:28.999139+00:00 app[clock.1]: Finished differencer
+2020-09-28T04:34:31.631729+00:00 app[clock.1]: Finished instatiate_driver
+2020-09-28T04:36:11.449854+00:00 app[clock.1]: Finished craigs_list_scrape
+2020-09-28T04:36:11.494136+00:00 app[clock.1]: Finished clean_craigslist
+2020-09-28T04:36:14.459126+00:00 app[clock.1]: Finished fill_Lat_Long
+2020-09-28T04:36:14.520678+00:00 app[clock.1]: Finished clean_rental_for_merg
+2020-09-28T04:36:14.729932+00:00 app[clock.1]: Finished updateDB
+2020-09-28T04:36:14.737698+00:00 app[clock.1]: Finished Updating the DB
+```
+
 ### FrontEnd
 FrontEnd Consists of the `HTML/CSS/Javascript stack`. Javscript retrieves the data from the APIs hosted by Flask based on user's selection 
 
