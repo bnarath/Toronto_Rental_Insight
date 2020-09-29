@@ -9,44 +9,59 @@ var isInCircleRadius = false;
 
 
 
-function createHeatmap(murder){
+function createHeatmap(){
+
+  // Function to map opacity based on MCI
+  function findOpacity(MCI){
+
+    switch(MCI) {
+      case "Assault":
+        return 0.7;
+      case "Auto Theft":
+          return 0.1;
+      case "Homicide":
+        return 0.9;
+      case "Break and Enter":
+        return 0.4;
+      case "Robbery":
+        return 0.4;
+      case "Theft Over":
+        return 0.1;
+    }
+
+
+  }
 
   var myMap = L.map("crime-heatmap", {
     center: [43.728754, -79.388561],
-    zoom: 9
+    zoom: 9,
+    minZoom: 9,
+    maxZoom: 12
   });
   
   L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
-    maxZoom: 9,
+    minZoom: 9,
+    maxZoom: 12,
     zoomOffset: -1,
     id: "mapbox/streets-v11",
     accessToken: API_KEY
   }).addTo(myMap);
-  
+
   var url = "http://127.0.0.1:5000/CrimeLastThreeMonths";
-  
-  d3.json(url, function(response) {
-  
-    console.log(response);
-  
-    var heatArray = response.map(d=>[d.lat, d.long]);
-  
-    // for (var i = 0; i < response.length; i++) {
-    //   var location = response[i].location;
-  
-    //   if (location) {
-    //     heatArray.push([location.coordinates[1], location.coordinates[0]]);
-    //   }
-    // }
-  
+  d3.json(url, function(fullcrime){
+
+    var heatArray = fullcrime.map(d=>[d.lat, d.long, findOpacity(d.MCI)]);
+
     var heat = L.heatLayer(heatArray, {
       radius: 20,
       blur: 35
     }).addTo(myMap);
-  
+
   });
+  
+ 
   // // To handle changing window
   // const resizeObserver = new ResizeObserver(() => {
   //   myMap.invalidateSize();
@@ -164,13 +179,13 @@ function CreateMap(rental, crime){
 };
 
 d3.json("http://127.0.0.1:5000/availableRental", function(rental){
+  heatmap = createHeatmap();
   d3.json("http://127.0.0.1:5000/CrimeLastThreeMonths", function(fullcrime){
 
   // var murder = fullcrime.filter(d=>d.MCI=="Homicide");
-  var murder = fullcrime
+  // var murder = fullcrime
   // console.log(murder);
-  heatmap = createHeatmap();
-  CreateMap(rental, murder);
+  CreateMap(rental, fullcrime);
   // Plot heatmap
 
 });
