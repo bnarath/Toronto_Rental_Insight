@@ -1,13 +1,4 @@
 
-
-//test json files
-
-// var path = '../static/js/crimeLastYear.json';
-
-// d3.json(path, function(data) {
-//   console.log(data)
-//         });
-
 function createMap (assetArray, rental, crime, data) {
 
   //create fsa layer from FSA geoJSON file
@@ -26,24 +17,53 @@ function createMap (assetArray, rental, crime, data) {
         }).addTo(FSA)
       });
 
-    // Create an overlayMaps object to hold the community asset layer
-  var overlayMaps = {
-      //"Average Income" : incomeChloropleuth,
-      "Community Services" : assetArray[0],
-      "Education & Employment": assetArray[1],
-      "Financial Services" : assetArray[2],
-      "Food & Housing" : assetArray[3],
-      "Health Services" : assetArray[4],
-      "Law & Government": assetArray[5],
-      "Tranportation" : assetArray[6]
-    };
+          // Define a baseMaps object to hold our base layers
+  var baseLayers = [
+        {
+          name:  "Rental Postings",
+          layer: rental
+        },
+        {
+          name:  '2019 Homicides',
+          layer: crime
+        },
+      ];
 
-    // Define a baseMaps object to hold our base layers
-    var baseMaps = {
-          "Rental Postings" : rental,
-          "2019 Homicides" : crime
-      };
-  
+        //create overlay object
+      var overLayers = [{
+        collapsed: true,
+        group: "Community Assets", 
+        layers:[{
+          name: '<p class="CS"> Community Services </p>',
+          layer: assetArray[0]
+        },
+        {
+          name: '<p class="EE"> Education & Employment </p>',
+          layer: assetArray[1]
+        },
+        {
+          name: '<p class="FS"> Financial Services </p>',
+          layer: assetArray[2]
+        },
+        {
+          name: '<p class="FH"> Food & Housing </p>',
+          layer: assetArray[3]
+        },
+        {
+          name: '<p class="HS"> Health Services </p>',
+          layer: assetArray[4]
+        },
+        {
+          name: '<p class="LG"> Law & Government </p>',
+          layer: assetArray[5]
+        },
+        {
+          name: '<p class="TR"> Transportation </p>',
+          layer: assetArray[6]
+        }],
+        
+      }];
+      
 
   // create tile layer
   var streetview = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -69,9 +89,7 @@ function createMap (assetArray, rental, crime, data) {
   TorontoMap.options.minZoom = 12;
 
   // Pass map layers into layer control and add the layer control to the map
-  L.control.layers(baseMaps, overlayMaps, {collapsed:true}).addTo(TorontoMap);
-
-  mapLegend(TorontoMap)
+  TorontoMap.addControl( new L.Control.PanelLayers(baseLayers, overLayers, {collapsibleGroups: true}));
 
   RentalCrimeInteraction(rental, data, TorontoMap)
 
@@ -194,39 +212,6 @@ function ReadLayersDisplay () {
 
 ReadLayersDisplay ();
 
-//function for creating legend
-function mapLegend (map) {
-
-  colors = ["yellow", "red", "orange", "green", "purple", "blue", "#0079A4"];
-
-  var legend = L.control({position: 'bottomright'});
-
-  legend.onAdd = function () {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-                  categories = ["Community Services", 
-                                'Education & Employment',
-                                "Financial Services",
-                                "Food & Housing",
-                                "Health Services",
-                                "Law & Government",
-                                "Transportation"
-                              ],
-                  labels =[];
-    
-    div.innerHTML += '<strong> Community Asset </strong> <br>'
-    // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < categories.length; i++) {
-        div.innerHTML +=
-            '<i class="circle" style="background:' + colors[i] + '"></i> ' +
-            categories[i] + '<br>';
-    };
-    return div;
- };
-legend.addTo(map);
-
-};
-
 //function for styling FSA polygons
 function FSAStyle (feature) {
   return {
@@ -241,19 +226,19 @@ function FSAStyle (feature) {
 function assestColors(type){
   switch (type) {
     case "Community Services":
-      return "yellow";
+      return  "rgb(235, 201, 8)";
     case "Education & Employment":
-      return "red";
+      return "rgb(168, 9, 168)";
     case "Financial Services":
-      return "orange";
+      return "rgb(7, 161, 7)";
     case "Food & Housing":
-      return "green";
+      return "rgb(214, 13, 13)";
     case "Health Services":
-      return "purple";
+      return "rgb(13, 117, 214)";
     case "Law & Government":
-      return "blue";
+      return "rgb(15, 59, 100)";
     case "Transportation":
-        return "#0079A4";
+        return "rgb(14, 248, 236)";
     default:
       return "black";
     }
@@ -349,7 +334,6 @@ function RentalCrimeInteraction(rentalMarkerGroup, data, map){
               );
             };
         };
-
             intCrimeMarkerGroup = L.layerGroup(allCrimeMarkers).addTo(map);
           });
         });
@@ -395,3 +379,48 @@ function crimeColors(type){
         return "ion-alert";
       }
   };
+ 
+//income choropleuth color function 
+
+function incomeColors(value){
+
+  var Path = "static/js/Toronto_FSA";
+
+  var holderIncomeAvg = 0;
+
+  d3.csv(FSAPath, function(data) {
+      
+      data.forEach(d =>{
+
+      if(d.FSA == value){
+          holderIncomeAvg = d.avgIncome
+         }
+       else{};
+      });
+  });
+
+  if (holderIncomeAvg < 20000){
+    return "#C9A4E4";
+  }
+  else if(holderIncomeAvg => 20000 && value <30000){
+    return "#A365D1";
+  }
+  else if(holderIncomeAvg => 30000 && value <40000){
+    return "#7A34AE";
+  }
+  else if(holderIncomeAvg => 40000 && value <50000){
+    return "#7A34AE";
+  }
+  else if(holderIncomeAvg => 50000 && value <60000){
+    return "#7A34AE";
+  }
+  else if(holderIncomeAvg => 60000 && value <70000){
+    return "#7A34AE";
+  }
+  else if(holderIncomeAvg=> 70000){
+    return "#7A34AE";
+  }
+  else{
+    return null;
+  }
+};
