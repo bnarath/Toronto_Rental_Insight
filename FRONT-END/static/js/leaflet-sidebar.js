@@ -221,29 +221,3 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
 L.control.sidebar = function (id, options) {
     return new L.Control.Sidebar(id, options);
 };
-
-var MyDemoClass = L.Class.extend({
-
-  // A property with initial value = 42
-  myDemoProperty: 42,   
-
-  // A method 
-  myDemoMethod: function() { return this.myDemoProperty; }
-  
-});
-
-
-
-var MyBoxClass = L.Class.extend({
-
-    options: {
-        width: 1,
-        height: 1
-    },
-
-    initialize: function(name, options) {
-        this.name = name;
-        L.setOptions(this, options);
-    }
-    
-});

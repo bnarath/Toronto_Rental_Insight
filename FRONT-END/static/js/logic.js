@@ -1,5 +1,7 @@
 var radius = 1000;
 var activeCircle = false;
+var heatmap;
+var heatmapMarker = false;
 
 var r = 0; //in meters
 var circleCenterPoint = [0,0]; //gets the circle's center latlng
@@ -7,6 +9,54 @@ var isInCircleRadius = false;
 
 
 
+function createHeatmap(murder){
+
+  var myMap = L.map("crime-heatmap", {
+    center: [43.728754, -79.388561],
+    zoom: 9
+  });
+  
+  L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    tileSize: 512,
+    maxZoom: 9,
+    zoomOffset: -1,
+    id: "mapbox/streets-v11",
+    accessToken: API_KEY
+  }).addTo(myMap);
+  
+  var url = "http://127.0.0.1:5000/CrimeLastThreeMonths";
+  
+  d3.json(url, function(response) {
+  
+    console.log(response);
+  
+    var heatArray = response.map(d=>[d.lat, d.long]);
+  
+    // for (var i = 0; i < response.length; i++) {
+    //   var location = response[i].location;
+  
+    //   if (location) {
+    //     heatArray.push([location.coordinates[1], location.coordinates[0]]);
+    //   }
+    // }
+  
+    var heat = L.heatLayer(heatArray, {
+      radius: 20,
+      blur: 35
+    }).addTo(myMap);
+  
+  });
+  // // To handle changing window
+  // const resizeObserver = new ResizeObserver(() => {
+  //   myMap.invalidateSize();
+  // });
+  // const mapDiv = document.getElementById("crime-heatmap");
+  // resizeObserver.observe(mapDiv);
+  return myMap;
+
+
+}
 
 function CreateMap(rental, crime){
 
@@ -44,14 +94,17 @@ function CreateMap(rental, crime){
       // Create a new map
       map = L.map("map-id", {
         //center : [39.8283, -98.5795],
-        center: [43.65, -79.36],
-        zoom : 15,
+        // center: [43.65, -79.36],
+        center: [43.7052, -79.4264],
+        zoom : 12,
+        doubleClickZoom: false,
         layers: [outdoorTile, rentalMarkerGroup, crimeMarkerGroup]
       }).on('click', function(e){
         // console.log(e.latlng["lat"], e.latlng["lng"]);
         if(activeCircle) {
           if (Math.abs(circleCenterPoint.distanceTo([e.latlng["lat"], e.latlng["lng"]])) > r){
             map.removeLayer(activeCircle);
+            map.removeLayer(crimeMarkerGroup);
           };
         }
       });
@@ -67,7 +120,11 @@ function CreateMap(rental, crime){
           // marker clicked is e.target
 
           sidebar.open('rentalListing',0);
-       
+          if(heatmapMarker){
+            heatmap.removeLayer(heatmapMarker);
+          }
+          heatmapMarker = L.marker(e.target.getLatLng(), {markerColor:'red'}).addTo(heatmap);
+          heatmap.setView([43.728754, -79.388561], 9);
           // remove active circle if any
           if(activeCircle) {
             map.removeLayer(activeCircle);
@@ -107,13 +164,15 @@ function CreateMap(rental, crime){
 };
 
 d3.json("http://127.0.0.1:5000/availableRental", function(rental){
-  d3.json("http://127.0.0.1:5000/crimeLastSixMonths", function(fullcrime){
+  d3.json("http://127.0.0.1:5000/CrimeLastThreeMonths", function(fullcrime){
 
-  var murder = fullcrime.filter(d=>d.MCI=="Homicide");
-  console.log(murder);
+  // var murder = fullcrime.filter(d=>d.MCI=="Homicide");
+  var murder = fullcrime
+  // console.log(murder);
+  heatmap = createHeatmap();
   CreateMap(rental, murder);
+  // Plot heatmap
 
-      
 });
 });
 

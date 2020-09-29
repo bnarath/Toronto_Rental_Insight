@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 from urls_list import  db_connection_string
 import re
@@ -6,6 +7,8 @@ import re
 
 #Configure Flask App
 app = Flask(__name__)
+CORS(app, resources={r"/foo": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def home_page():  
@@ -146,6 +149,7 @@ def getcrimeDynamic():
     # ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
     # http://127.0.0.1:5000/crimeLastYear?MCI=Break%20and%20Enter
 @app.route('/crimeLastSixMonths')
+@cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def getcrimeShortSixMonths():
     attr = request.args.get("MCI")
     return getCrimeData("CrimeLastSixMonths", attr)
@@ -153,6 +157,7 @@ def getcrimeShortSixMonths():
     # ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
     # http://127.0.0.1:5000/crimeLastSixMonths?MCI=Break%20and%20Enter
 @app.route('/CrimeLastThreeMonths')
+@cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def getcrimeShortThreeMonths():
     attr = request.args.get("MCI")
     return getCrimeData("CrimeLastThreeMonths", attr)

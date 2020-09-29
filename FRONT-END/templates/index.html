@@ -50,7 +50,8 @@
             <li><a href="#rental" role="tab"><i class="fa fa-building" alt="Rental Trends"></i></a>Rental Trends</li>
             <li><a href="#crime" role="tab"><i class="fa fa-bomb" aria-hidden="true"></i>Crime Trends</a></li>
             <li><a href="#filter" role="tab"><i class="fa fa-filter"></i>Filter</a></li>
-            <li class="disabled"><a href="#rentalListing" role="tab"><i class="fa fa-home" aria-hidden="true"></i>Crime Trends</a></li>
+            <!-- <li class="disabled"><a href="#rentalListing" role="tab"><i class="fa fa-home" aria-hidden="true"></i>Crime Trends</a></li> -->
+            <li><a href="#rentalListing" role="tab"><i class="fa fa-home" aria-hidden="true"></i>Crime Trends</a></li>
             <li class="disabled"><a href="#communityListing" role="tab"><i class="fa fa-university"></i>Filter</a></li>
         </ul>
 
@@ -140,6 +141,7 @@
 
         <div class="sidebar-pane" id="rentalListing">
             <h1 class="sidebar-header">Rental Listing Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <div id="crime-heatmap"></div>
         </div>
         <div class="sidebar-pane" id="communityListing">
           <h1 class="sidebar-header">Community Asset Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
@@ -159,8 +161,12 @@
   crossorigin=""></script>
   <!-- D3 JavaScript -->
   <script src="https://d3js.org/d3.v4.min.js"></script>
+  <!-- Plotly JS -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <!-- Placeholder for other plugins  -->
   <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
+  <!-- Leaflet heatmap -->
+  <script src="static/js/leaflet-heat.js"></script>
   
   <!-- Our JavaScripts -->
   <script type="text/javascript" src="static/js/config.js"></script>
