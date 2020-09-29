@@ -49,11 +49,9 @@ function createHeatmap(){
     accessToken: API_KEY
   }).addTo(myMap);
 
-  var url = "http://127.0.0.1:5000/CrimeLastThreeMonths";
+  var url = "http://127.0.0.1:5000/CrimeLastMonth";
   d3.json(url, function(fullcrime){
-
     var heatArray = fullcrime.map(d=>[d.lat, d.long, findOpacity(d.MCI)]);
-
     var heat = L.heatLayer(heatArray, {
       radius: 20,
       blur: 35
@@ -136,6 +134,7 @@ function CreateMap(rental, crime){
 
           sidebar.open('rentalListing',0);
           if(heatmapMarker){
+            curr_zoom = console.log(heatmap.getZoom());
             heatmap.removeLayer(heatmapMarker);
           }
           heatmapMarker = L.marker(e.target.getLatLng(), {markerColor:'red'}).addTo(heatmap);
@@ -180,7 +179,7 @@ function CreateMap(rental, crime){
 
 d3.json("http://127.0.0.1:5000/availableRental", function(rental){
   heatmap = createHeatmap();
-  d3.json("http://127.0.0.1:5000/CrimeLastThreeMonths", function(fullcrime){
+  d3.json("http://127.0.0.1:5000/CrimeLastMonth", function(fullcrime){
 
   // var murder = fullcrime.filter(d=>d.MCI=="Homicide");
   // var murder = fullcrime

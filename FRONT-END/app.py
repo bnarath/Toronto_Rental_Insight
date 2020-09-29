@@ -164,6 +164,15 @@ def getcrimeShortThreeMonths():
     # Options
     # ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
     # http://127.0.0.1:5000/CrimeLastThreeMonths?MCI=Break%20and%20Enter
+
+@app.route('/CrimeLastMonth')
+@cross_origin(origin='*',headers=['Content-Type','Authorization'])
+def getcrimeShortLastMonth():
+    attr = request.args.get("MCI")
+    return getCrimeData("CrimeLastMonth", attr)
+    # Options
+    # ['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
+    # http://127.0.0.1:5000/CrimeLastMonth?MCI=Break%20and%20Enter
 @app.route('/communityAssets')
 def getcommAssets():
     args = request.args.to_dict()
