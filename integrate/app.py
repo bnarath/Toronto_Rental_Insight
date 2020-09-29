@@ -1,16 +1,11 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request
 from pymongo import MongoClient
 from urls_list import  db_connection_string
 import re
 
-
 #Configure Flask App
 app = Flask(__name__)
 
-@app.route('/')
-def home_page():  
-    return render_template('index.html', name='home_page')
-    
 def createQuery(query, arr, attribute):
     if arr[0] == -1:
         query[attribute] = {"$lte":arr[1]}

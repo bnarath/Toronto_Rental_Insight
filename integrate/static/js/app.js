@@ -15,7 +15,7 @@ function init(){
     //var filepath="../data/samples.json"; //localhost file path
     var filepath="https://sogramemon.github.io/plotly-javascript-challenge/data/samples.json" //using url
     //var filepath="../plotly-javascript-challenge/data/samples.json" //github pages file path
-    var dataPromise= d3.json(filepath).then(data => {
+    var dataPromise= d3.json(filepath, function(data) {
         //get the values for the first otu_id
         sampleValues= data.samples.map(sample => sample.sample_values);
         otuIds= data.samples.map(sample => sample.otu_ids);
