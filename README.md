@@ -9,7 +9,7 @@ The applications that provide classified rental services like `Craigslist` and
 * Toronto Rental Data - [Craigslist](https://toronto.craigslist.org/search/hhh), [Kijiji](https://www.kijiji.ca/) - Though Scraping
 * Crime Data - [Toronto Police Services Open Data](https://data.torontopolice.on.ca/pages/catalogue) - Through API
 * Community Services Data - [Toronto Public Services](https://torontops.maps.arcgis.com/home/item.html?) - Through Scraping
-* Income & Age Data - [Canada Revenue Agency](https://www.canada.ca/en/revenue-agency/programs/about-canada-revenue-agency-cra/income-statistics-gst-hst-statistics/individual-tax-statistics-fsa/individual-tax-statistics-fsa-2017-edition-2015-tax-year.html#toc9) - Through static files
+* Income & Age Data - [Canada Revenue Agency](https://www.canada.ca/en/revenue-agency/programs/about-canada-revenue-agency-cra/income-statistics-gst-hst-statistics/individual-tax-statistics-fsa/individual-tax-statistics-fsa-2017-edition-2015-tax-year.html#toc9) & [Stats Canada](https://www.statcan.gc.ca/)- Through static files
 
 ### Methods Used
 - Data Extraction (Selenium, BeautifulSoup, google API, mapquest API)
@@ -48,26 +48,26 @@ The applications that provide classified rental services like `Craigslist` and
 
 <img src="Design_Documents/Architecture.png" alt="Architecture" width="1000"/>
 
-**Architecture consists of `full stack` - `Front End`, `Backend` and `ETL`**
+**Architecture consists of `full stack` - `Automated ETL` -> `Python - Flask` -> `HTML/CSS/JS`
 
-### ETL
-- **Extract:** Extracts the data from `Kijiji, Craigslist, Toronto Police Services(TPS),  Canada Revenue Agency (CRA), and Stats Canada` using `Scraping, API services.`
+### Automated ETL
+- **Extract:** Extracts the data from `Kijiji, Craigslist, Toronto Police Services(TPS),  Canada Revenue Agency (CRA), and Stats Canada` using `Scraping` and  API services.`
 
 - **Transform:** Transformation of data through `various python packages` including pandas and numpy.
 
 - **Load:** Loads the data to the `cloud MongoDB(Atlas) database.` ETL is separate from the cloud application. Serves as a separate functionality to extract, transform and preload the database. 
 
-### BackEnd
-Backend consists of a `Flask Core engine` which has `4 core components`.
-- **Scraper:** 
-Crawls the Rental Data from Craigslist
-- **Scheduler:** 
-Schedules scraping every day at 12 AM EDT
-- **Differencer:**
-  - Updates the daily and historical rental DB Tables. 
-  - Marks the rental postings unavailable once taken off
-- **API endpoints:** Hosts the API endpoints
-
+- **Automation** - **The process of Extraction of rental data (only from Craigslist), Transform and Load is automated.**
+ - **Scraper:** 
+   Crawls the Rental Data from Craigslist
+ - **Scheduler: Hosted in Heroku as a separate Scheduling Application** 
+   Schedules ETL every day at 4.30 AM EDT (If you wonder why, There is no specific reason for this specific time !!)
+ - **Differencer:**
+  - Updates the current and historical rental DB Tables. 
+  - Current rental data - consists of only the current available rental listings.
+  - Historic rental data - consists of all rental listings.
+  
+A snippet of automated ETL process is shown below (heroku logs).
 ```diff
 2020-09-26T04:30:00.001509+00:00 app[clock.1]: Started updateDB
 2020-09-26T04:34:04.395572+00:00 app[clock.1]: Finished craigs_list_api_call
@@ -105,6 +105,11 @@ Schedules scraping every day at 12 AM EDT
 2020-09-29T04:40:20.488990+00:00 app[clock.1]: Finished updateDB
 2020-09-29T04:40:20.495897+00:00 app[clock.1]: Finished Updating the DB
 ```
+### Python - Flask
+**Handles request from front end Javascript provides the requested data in JSON format**
+- **API endpoints:** Hosts the API endpoints
+- **Inteacts with MongoDB**
+
 ### FrontEnd
 FrontEnd Consists of the `HTML/CSS/Javascript stack`. Javscript retrieves the data from the APIs hosted by Flask based on user's selection 
 
@@ -166,11 +171,3 @@ Crime data
 
 <img src="Images/crime.png" alt="Headline" width="1000"/>
 
-
-## Needs of this project
-
-- User Experience 
-- data exploration
-- data processing/cleaning
-- statistical modeling
-- Dashboard Building
