@@ -1,32 +1,48 @@
 # Toronto Rental Insight App
-This project is a continuation of the Toronto_Rental_ETL_Project. The Toronto_Rental_ETL_Project scraped, cleaned, transformed and stored data from multiple data sources and made it available for use through a Flask API which can be found [here](https://github.com/bnarath/Toronto_Rental_ETL_Project/blob/master/README.md). This project aims to further automate the task of acquiring the data by using a scheduler that will scrape the data sources on a daily bases and update the database. This project also aims to make this data available to users for exploration through the creation of a user friendly, interactive dashboard.  
+This project is a continuation of the Toronto_Rental_ETL_Project. The Toronto_Rental_ETL_Project scraped, cleaned, transformed and stored data from multiple data sources and made it available for use through a Flask API which can be found [here](https://github.com/bnarath/Toronto_Rental_ETL_Project/blob/master/README.md). **This project aims to further automate the task of acquiring the data by using a scheduler that will scrape the data sources on a daily basis and update the database and provide the much granular data using improvised API services. This project also aims to make this data available to users for exploration through the creation of a user friendly, interactive dashboard, and finally hosting the application in the cloud.**
 
-#### -- Project Status: Active
 
 ## Project Intro/Objective
-The purpose of this project is to help users find a rental property that fits within their budget as well as other requirements such as being located in a crime free neighborhood and is in close proximity to community services such as schools and healthcare centers.
+The applications that provide classified rental services like `Craigslist` and `Kijiji` **focus on providing details regarding only the listed rentals. That doesn't necessarily mean all what the users are looking for.**  One would be truly interested to know `how safe the neighbourhood is?` What are `the community services available` in the neighborhood to use?, What is the `socio-economic status of the location (like average income and age) ?` **That is what this project is all about; to provide the users with all they want about and around the rental listings!!** The purpose of this project is to help users find a rental property that fits within their budget as well as other requirements such as being located in a crime free neighborhood and is in close proximity to community services such as schools and healthcare centers. To be specific, the purpose of this project is to help users find a rental property that fits within their budget as well as other requirements such as being located in a crime free neighborhood and is in close proximity to community services such as schools and healthcare centers.
 
 ### Data Sources
-* Toronto Rental Data - [Craigslist](https://toronto.craigslist.org/search/hhh), [Kijiji](https://www.kijiji.ca/)
-* Crime Data - [Toronto Police Services Open Data](https://data.torontopolice.on.ca/pages/catalogue)
-* Community Services Data - [Toronto Public Services](https://torontops.maps.arcgis.com/home/item.html?)
-* Income Data - [Canada Revenue Agency](https://www.canada.ca/en/revenue-agency/programs/about-canada-revenue-agency-cra/income-statistics-gst-hst-statistics/individual-tax-statistics-fsa/individual-tax-statistics-fsa-2017-edition-2015-tax-year.html#toc9)
+* Toronto Rental Data - [Craigslist](https://toronto.craigslist.org/search/hhh), [Kijiji](https://www.kijiji.ca/) - Though Scraping
+* Crime Data - [Toronto Police Services Open Data](https://data.torontopolice.on.ca/pages/catalogue) - Through API
+* Community Services Data - [Toronto Public Services](https://torontops.maps.arcgis.com/home/item.html?) - Through Scraping
+* Income & Age Data - [Canada Revenue Agency](https://www.canada.ca/en/revenue-agency/programs/about-canada-revenue-agency-cra/income-statistics-gst-hst-statistics/individual-tax-statistics-fsa/individual-tax-statistics-fsa-2017-edition-2015-tax-year.html#toc9) - Through static files
 
 ### Methods Used
-* Data Visualization
-* Data Modeling 
-* Cloud Computing
+- Data Extraction (Selenium, BeautifulSoup, google API, mapquest API)
+- Data Transformation (Python - pandas, numpy, regex)
+- Data Loading (MongoDB - cloud, MongoClient)
+- Automation of Extraction, Transformation & Load (Advanced Python Scheduler - Heroku )
+- API services - Flask 
+- Data Visualization (Leaflet :- leaflet sidebar(extension), heatmap(plugin), Leaflet Panel Layers(plugin), Plotly, D3(Data handling for visuals)
 
 ### Technologies
 * Python
-* D3
-* Leaflet
+  * Extraction
+    * BeautifulSoap
+    * Selenium
+  * Transformation
+    * Pandas
+    * Numpy
+    * Regex
 * MongoDB
-* HTML
+  * MongoClient
+  * Atlas
 * JavaScript
-* CSS
-* BootStrap
-* BeautifulSoap
+  * D3
+  * Leaflet
+    * Sidebar
+    * Leaflet Panel
+    * Heatmap
+    * Mapbox
+  * Plotly
+* Web
+  * HTML
+  * CSS
+  * BootStrap
 
 ## Project Architecture
 
