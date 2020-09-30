@@ -19,7 +19,7 @@ function init(){
         //get data for fsa and income
         dataM = data.filter(d =>d.FSA.substring(0,1)=="M");
         FSA =  dataM.map(d => d.FSA).reverse();
-        console.log(FSA);
+        //console.log(FSA);
         avgIncomePerFSA= dataM.map(d => d.avg_income).reverse();
         avgAgePerFSA= dataM.map(d => d.Avg_Age).reverse();
         //create dataChart for bar chart

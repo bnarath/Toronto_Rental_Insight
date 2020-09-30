@@ -5,6 +5,8 @@
 // d3.json(path, function(data) {
 //   console.log(data)
 //         });
+var heatmap;
+var heatmapMarker = false;
 var activeCircle = false;
 var intCrimeMarkerGroup = L.layerGroup([]);
 var circleCenterPoint = [0,0]; //gets the circle's center latlng
@@ -18,6 +20,70 @@ var assetArray;
 var rentalDetails=[];
 var dataDisplayed=[];
 var rentalPath = `${url}availableRental`;
+//var rentalPath ="https://sogramemon.github.io/plotly-javascript-challenge/data/minavailableRental.json";
+
+
+function createHeatmap(){
+
+  // Function to map opacity based on MCI
+  function findOpacity(MCI){
+
+    switch(MCI) {
+      case "Assault":
+        return 0.7;
+      case "Auto Theft":
+          return 0.1;
+      case "Homicide":
+        return 0.9;
+      case "Break and Enter":
+        return 0.4;
+      case "Robbery":
+        return 0.4;
+      case "Theft Over":
+        return 0.1;
+    }
+
+
+  }
+
+  var myMap = L.map("crime-heatmap", {
+    center: [43.728754, -79.388561],
+    zoom: 9,
+    minZoom: 9,
+    maxZoom: 12
+  });
+  
+  L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    tileSize: 512,
+    minZoom: 9,
+    maxZoom: 12,
+    zoomOffset: -1,
+    id: "mapbox/streets-v11",
+    accessToken: API_KEY
+  }).addTo(myMap);
+
+  var url = "http://127.0.0.1:5000/CrimeLastMonth";
+  d3.json(url, function(fullcrime){
+    var heatArray = fullcrime.map(d=>[d.lat, d.long, findOpacity(d.MCI)]);
+    var heat = L.heatLayer(heatArray, {
+      radius: 20,
+      blur: 35
+    }).addTo(myMap);
+
+  });
+  
+ 
+  // // To handle changing window
+  // const resizeObserver = new ResizeObserver(() => {
+  //   myMap.invalidateSize();
+  // });
+  // const mapDiv = document.getElementById("crime-heatmap");
+  // resizeObserver.observe(mapDiv);
+  return myMap;
+
+
+}
 
 
 function createMap (assetArray, rental, crime, data) {
@@ -108,6 +174,8 @@ function createMap (assetArray, rental, crime, data) {
 };
   
   function ReadLayersDisplay (rentalPath) {
+
+    heatmap= createHeatmap();
   
       //create community asset layers
   
@@ -166,7 +234,7 @@ function createMap (assetArray, rental, crime, data) {
             //var rentalPath ="https://sogramemon.github.io/plotly-javascript-challenge/data/minavailableRental.json";
   
             d3.json(rentalPath, function(rental){
-  
+
                 //create rental posting layer
                 var rentalMarkers = [];
   
@@ -186,8 +254,11 @@ function createMap (assetArray, rental, crime, data) {
                   }).bindPopup(feature.title));
                   rentalDetails.push(feature);
                 });
+
+                
   
                 rentalMarkerGroup = L.layerGroup(rentalMarkers);
+
                 
                 var CrimeMarkers = [];
   
@@ -354,6 +425,15 @@ function createMap (assetArray, rental, crime, data) {
           
           obj.on('click', function(e) {
             // marker clicked is e.target
+            // marker clicked is e.target
+
+            sidebar.open('rentalListing',0);
+            if(heatmapMarker){
+              curr_zoom = console.log(heatmap.getZoom());
+              heatmap.removeLayer(heatmapMarker);
+            }
+            heatmapMarker = L.marker(e.target.getLatLng(), {markerColor:'red'}).addTo(heatmap);
+            heatmap.setView([43.728754, -79.388561], 9);
          
             if(intCrimeMarkerGroup) {
               map.removeLayer(intCrimeMarkerGroup);
@@ -371,7 +451,7 @@ function createMap (assetArray, rental, crime, data) {
                }).addTo(map);
   
             r = activeCircle.getRadius(); //in meters
-  
+            console.log("In function");
             circleCenterPoint = activeCircle.getLatLng(); //gets the circle's center latlng
             
             allCrimeMarkers = [];
@@ -453,70 +533,9 @@ function createMap (assetArray, rental, crime, data) {
         }
     };
 
-    function updateRentalMarkers(rental){
-      //remove layers from map
-      if(activeCircle) {
-                  
-          TorontoMap.removeLayer(activeCircle);   
-          TorontoMap.removeLayer(intCrimeMarkerGroup);       
-        }
-      TorontoMap.removeLayer(rentalMarkerGroup);
-      // var rentalMarkers = [];
-  
-      //           rental.forEach(function(feature) {
-  
-      //             var rental = L.ExtraMarkers.icon({
-      //               markerColor: "green-light",
-      //               svg: true,
-      //               number: rentalText(feature.bedrooms),
-      //               shape: 'circle',
-      //               iconColor: "white",
-      //               icon: 'fa-number'
-      //             });
-  
-      //             rentalMarkers.push(L.marker([feature.lat, feature.long], {
-      //               icon: rental
-      //             }).bindPopup(feature.title));
-      //           });
-  
-      //           rentalMarkerGroup = L.layerGroup(rentalMarkers);
-                
-      //           var CrimeMarkers = [];
-  
-      //           //read crime dataset
-      //           //var crimePath = `${url}crimeLastSixMonths`;
-      //           var crimePath = "https://sogramemon.github.io/plotly-javascript-challenge/data/crimeLastSixMonths.json";
-  
-      //           d3.json(crimePath, function(fullcrime){
-  
-      //             var crimeIcon = L.ExtraMarkers.icon({
-      //               icon: "ion-alert",
-      //               iconColor: "white",
-      //               markerColor: "blue",
-      //               shape: "penta"
-      //             });
-  
-      //             var murder = fullcrime.filter(d=>d.MCI=="Homicide");
-  
-      //             //create markers 
-      //             murder.forEach(row => {
-      //               CrimeMarkers.push(L.marker([row.lat, row.long],{
-      //                 icon: crimeIcon
-      //               }).bindPopup(row.MCI)
-      //               .on('click', function(e){
-      //                 //open sidebar crime tab when a homicide crime is clicked
-      //                 sidebar.open("crime");
-      //               }));
-                  
-      //             });
-                  
-      //             //create layer
-      //             var CrimeMarkerGroup = L.layerGroup(CrimeMarkers);
-                     
-      //             createMap(assetArray, rentalMarkerGroup, CrimeMarkerGroup, fullcrime);
-      //           });
+    
             
 
-    }
+    
 
     
