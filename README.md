@@ -101,12 +101,12 @@ We have multiple API end points; all deliver relevant data through static and dy
     - [Fetch the crime data based on MCI ](https://etlinsightapi.herokuapp.com/crimeLastYear?MCI=Break%20and%20Enter)
     - Options for MCI:-['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
  - **Community Assets**
-  - Static endpoints
-    - [All community assets](https://etlinsightapi.herokuapp.com/communityAssets)
-  - Dynamic query to fetch data (Just an example below)
-    - [Fetch the community assets based on - FSA](https://etlinsightapi.herokuapp.com/communityAssets?category=Food%20%26%20Housing&fsa=M1P)
-    - Options for category:- ['Community Services','Education & Employment','Financial Services','Food & Housing','Health Services','Law & Government','Transportation']
-    - Note: Replace `&` with `%26` in URL
+    - Static endpoints
+      - [All community assets](https://etlinsightapi.herokuapp.com/communityAssets)
+    - Dynamic query to fetch data (Just an example below)
+      - [Fetch the community assets based on - FSA](https://etlinsightapi.herokuapp.com/communityAssets?category=Food%20%26%20Housing&fsa=M1P)
+      - Options for category:- ['Community Services','Education & Employment','Financial Services','Food & Housing','Health Services','Law & Government','Transportation']
+      - Note: Replace `&` with `%26` in URL
 - **FSA income & age**
   - Static endpoints
     - [All FSA vs Age & Income](https://etlinsightapi.herokuapp.com/fsaIncomeAge)
