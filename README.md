@@ -23,7 +23,7 @@ The applications that provide classified rental services like `Craigslist` and
 
 <img src="Design_Documents/Architecture.png" alt="Architecture" width="1000"/>
 
-**Architecture consists of `full stack` - `Automated ETL` -> `Python - Flask` -> `HTML/CSS/JS`
+**Architecture consists of `full stack` - `Automated ETL` -> `Python - Flask` -> `HTML/CSS/JS`**
 
 ### Automated ETL
 - **Extract:** Extracts the data from `Kijiji, Craigslist, Toronto Police Services(TPS),  Canada Revenue Agency (CRA), and Stats Canada` using `Scraping` and  API services.`
