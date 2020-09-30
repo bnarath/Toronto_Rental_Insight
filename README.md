@@ -81,29 +81,38 @@ The applications that provide classified rental services like `Craigslist` and
   2020-09-29T04:40:20.495897+00:00 app[clock.1]: Finished Updating the DB
   ```
 ### Python - Flask
-**Handles request from front end Javascript provides the requested data in JSON format**
+**Handles request from front end Javascript, Inteacts with MongoDB and provides the requested data in JSON format**
 - **API endpoints:** Hosts the API endpoints
-We have multiple API end points; all deliver relevant data through static and dynamic queries
-API end points:
-- Rental
-  - static endpoints
-    - [all available rental listings](https://etlinsightapi.herokuapp.com/availableRental)
-    - [historic rental listings](https://etlinsightapi.herokuapp.com/rentalTrend)
-  - dynamic query to fetch data (Just an example below)
+We have multiple API end points; all deliver relevant data through static and dynamic queries.
+**`API end points:`**
+- **Rental**
+  - Static endpoints
+    - [All available rental listings](https://etlinsightapi.herokuapp.com/availableRental)
+    - [Historic rental listings](https://etlinsightapi.herokuapp.com/rentalTrend)
+  - Dynamic query to fetch data (Just an example below)
     - [Fetch the rental based on your filters on - price range, sqft range , bedrooms and bathrooms ](https://etlinsightapi.herokuapp.com/availableRental?sqft=[1000,-1]&price=[1500,2500]&bedrooms=[2,-1]&bathrooms=[1,-1]&FSA=M4E)
-- Crime
-  - static endpoints
+- **Crime**
+  - Static endpoints
     - [Last year](https://etlinsightapi.herokuapp.com/crimeLastYear)
     - [Last 6 months](https://etlinsightapi.herokuapp.com/crimeLastSixMonths)
-    - [Last 3 months] (https://etlinsightapi.herokuapp.com/CrimeLastThreeMonths)
-    - [Last 1 month] (https://etlinsightapi.herokuapp.com/CrimeLastMonth)
-  - dynamic query to fetch data (Just an example below)
-    - [Fetch the crime data based on MCI ]( https://etlinsightapi.herokuapp.com/crimeLastYear?MCI=Break%20and%20Enter)
+    - [Last 3 months](https://etlinsightapi.herokuapp.com/CrimeLastThreeMonths)
+    - [Last 1 month](https://etlinsightapi.herokuapp.com/CrimeLastMonth)
+  - Dynamic query to fetch data (Just an example below)
+    - [Fetch the crime data based on MCI ](https://etlinsightapi.herokuapp.com/crimeLastYear?MCI=Break%20and%20Enter)
     - Options for MCI:-['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
+ - **Community Assets**
+  - Static endpoints
+    - [All community assets](https://etlinsightapi.herokuapp.com/communityAssets)
+  - Dynamic query to fetch data (Just an example below)
+    - [Fetch the community assets based on - FSA](https://etlinsightapi.herokuapp.com/communityAssets?category=Food%20%26%20Housing&fsa=M1P)
+    - Options for category:- ['Community Services','Education & Employment','Financial Services','Food & Housing','Health Services','Law & Government','Transportation']
+    - Note: Replace `&` with `%26` in URL
+- **FSA income & age**
+  - Static endpoints
+    - [All FSA vs Age & Income](https://etlinsightapi.herokuapp.com/)
+  - [Fetch the average age and income based on - FSA](https://etlinsightapi.herokuapp.com/fsaIncomeAge?FSA=M4E)
   
-
-
-- **Inteacts with MongoDB**
+ 
 
 ### FrontEnd
 FrontEnd Consists of the `HTML/CSS/Javascript stack`. Javscript retrieves the data from the APIs hosted by Flask based on user's selection 
