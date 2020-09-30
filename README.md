@@ -109,7 +109,7 @@ We have multiple API end points; all deliver relevant data through static and dy
     - Note: Replace `&` with `%26` in URL
 - **FSA income & age**
   - Static endpoints
-    - [All FSA vs Age & Income](https://etlinsightapi.herokuapp.com/)
+    - [All FSA vs Age & Income](https://etlinsightapi.herokuapp.com/fsaIncomeAge)
   - [Fetch the average age and income based on - FSA](https://etlinsightapi.herokuapp.com/fsaIncomeAge?FSA=M4E)
   
  
