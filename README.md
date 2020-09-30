@@ -19,31 +19,6 @@ The applications that provide classified rental services like `Craigslist` and
 - API services - Flask 
 - Data Visualization (Leaflet :- leaflet sidebar(extension), heatmap(plugin), Leaflet Panel Layers(plugin), Plotly, D3(Data handling for visuals)
 
-### Technologies
-* Python
-  * Extraction
-    * BeautifulSoap
-    * Selenium
-  * Transformation
-    * Pandas
-    * Numpy
-    * Regex
-* MongoDB
-  * MongoClient
-  * Atlas
-* JavaScript
-  * D3
-  * Leaflet
-    * Sidebar
-    * Leaflet Panel
-    * Heatmap
-    * Mapbox
-  * Plotly
-* Web
-  * HTML
-  * CSS
-  * BootStrap
-
 ## Project Architecture
 
 <img src="Design_Documents/Architecture.png" alt="Architecture" width="1000"/>
@@ -171,3 +146,27 @@ Crime data
 
 <img src="Images/crime.png" alt="Headline" width="1000"/>
 
+### Technologies
+* Python
+  * Extraction
+    * BeautifulSoap
+    * Selenium
+  * Transformation
+    * Pandas
+    * Numpy
+    * Regex
+* MongoDB
+  * MongoClient
+  * Atlas
+* JavaScript
+  * D3
+  * Leaflet
+    * Sidebar
+    * Leaflet Panel
+    * Heatmap
+    * Mapbox
+  * Plotly
+* Web
+  * HTML
+  * CSS
+  * BootStrap
