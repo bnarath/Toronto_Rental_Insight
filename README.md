@@ -83,6 +83,26 @@ The applications that provide classified rental services like `Craigslist` and
 ### Python - Flask
 **Handles request from front end Javascript provides the requested data in JSON format**
 - **API endpoints:** Hosts the API endpoints
+We have multiple API end points; all deliver relevant data through static and dynamic queries
+API end points:
+- Rental
+  - static endpoints
+    - [all available rental listings](https://etlinsightapi.herokuapp.com/availableRental)
+    - [historic rental listings](https://etlinsightapi.herokuapp.com/rentalTrend)
+  - dynamic query to fetch data (Just an example below)
+    - [Fetch the rental based on your filters on - price range, sqft range , bedrooms and bathrooms ](https://etlinsightapi.herokuapp.com/availableRental?sqft=[1000,-1]&price=[1500,2500]&bedrooms=[2,-1]&bathrooms=[1,-1]&FSA=M4E)
+- Crime
+  - static endpoints
+    - [Last year](https://etlinsightapi.herokuapp.com/crimeLastYear)
+    - [Last 6 months](https://etlinsightapi.herokuapp.com/crimeLastSixMonths)
+    - [Last 3 months] (https://etlinsightapi.herokuapp.com/CrimeLastThreeMonths)
+    - [Last 1 month] (https://etlinsightapi.herokuapp.com/CrimeLastMonth)
+  - dynamic query to fetch data (Just an example below)
+    - [Fetch the crime data based on MCI ]( https://etlinsightapi.herokuapp.com/crimeLastYear?MCI=Break%20and%20Enter)
+    - Options for MCI:-['Assault', 'Auto Theft', 'Break and Enter', 'Homicide', 'Robbery', 'Theft Over']
+  
+
+
 - **Inteacts with MongoDB**
 
 ### FrontEnd
