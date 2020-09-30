@@ -38,7 +38,9 @@ function init(){
 
         uniqueDate = [...new Set(datePosted)];
 
-        for (var i = 0; i < uniqueDate.length; i++){
+        uniqueDate.sort();
+
+        for (var i = 20; i < uniqueDate.length; i++){
 
             var oneBedroom = [];
             var twoBedroom = [];
@@ -68,14 +70,14 @@ function init(){
             oneBedAvg.push(parseInt(average(oneBedroom)));
             twoBedAvg.push(parseInt(average(twoBedroom)));
             threeorMoreBedAvg.push(parseInt(average(threeorMoreBedroom)));
-        }
+        };
 
         //setup plot
 
         var trace1 = {
             x: dates,
             y: oneBedAvg,
-            mode: 'markers',
+            //mode: 'markers',
             name: 'One Bedroom',
             marker: {
               color: 'rgb(168, 9, 168)',
@@ -91,7 +93,7 @@ function init(){
           var trace2 = {
             x: dates,
             y: twoBedAvg,
-            mode: 'markers',
+            //mode: 'markers',
             name: 'Two Bedroom',
             marker: {
               color: 'rgb(13, 117, 214)',
@@ -103,7 +105,7 @@ function init(){
           var trace3 = {
             x: dates,
             y: threeorMoreBedAvg,
-            mode: 'markers',
+            //mode: 'markers',
             name: 'Three or More Bedrooms',
             marker: {
               color: 'rgb(7, 161, 7)',
@@ -120,7 +122,7 @@ function init(){
             xaxis: {
               title: 'Date',
               showgrid: false,
-              zeroline: false
+              zeroline: false,
             },
             yaxis: {
               title: 'Average Cost',
@@ -137,5 +139,109 @@ function init(){
     });
 };
 
+var FSAList =[];
+var uniqueFSA =[];
+var FSAFirstTwo =[];
+var oneBedAvgFSA =[];
+var twoBedAvgFSA =[];
+var threeorMoreBedAvgFSA =[];
+
+//create function to initialize dashboard
+
+function initFSA(){
+  //read json file into js
+  d3.json("data/rentalTrend.json").then(data => {
+
+      //determine dates
+      data.forEach(posting=> {
+
+        var holder = posting.FSA;
+        var eval = holder.substring(0,1);
+
+        if (eval == "M"){
+        FSAList.push(posting.FSA)
+        };
+ 
+          });
+      
+        for (var i = 0; i < FSAList.length; i++){
+          
+          var holder = FSAList[i].substring(0,2)
+
+          FSAFirstTwo.push(holder)
+          
+        };
+      uniqueFSA = [...new Set(FSAFirstTwo)];
+
+      uniqueFSA.sort()
+
+      console.log(uniqueFSA)
+
+      for (var i = 0; i < uniqueFSA.length; i++){
+
+          var oneBedroom = [];
+          var twoBedroom = [];
+          var threeorMoreBedroom = [];
+
+          data.forEach(posting => {
+
+            var holder = posting.FSA
+            var eval = holder.substring(0,2);
+
+              if(eval == uniqueFSA[i]){
+
+                  if (posting.bedrooms == 1){
+                      oneBedroom.push(parseInt(posting.price));
+                  }
+                  else if(posting.bedrooms == 2){
+                      twoBedroom.push(parseInt(posting.price));
+                  }
+                  else if(posting.bedrooms > 2 && posting.bedrooms < 10){
+                      threeorMoreBedroom.push(parseInt(posting.price));
+                  }
+                  else{
+
+                  }
+              }
+              else{}
+          });
+
+          // console.log(uniqueFSA.length)
+          oneBedAvgFSA.push(parseInt(average(oneBedroom)));
+          twoBedAvgFSA.push(parseInt(average(twoBedroom)));
+          threeorMoreBedAvgFSA.push(parseInt(average(threeorMoreBedroom)));
+      };
+
+//       //setup plot
+      var data = [{
+        type: 'bar',
+        x: oneBedAvgFSA,
+        y: uniqueFSA,
+        orientation: 'h',
+        marker: {
+          color: 'rgb(168, 9, 168)'
+        }
+      }];
+
+      var layout = {
+        title: 'Average Cost to Rent One Bedroom',
+        showlegend: false,
+        xaxis: {
+          title: 'Average Cost'
+        },
+        yaxis: {
+          title: 'First Two Digits of Postal Code', 
+          zeroline: false,
+          gridwidth: 2
+        },
+        bargap :0.05
+      };
+
+//         //plot chart
+        Plotly.newPlot("chart-hb", data, layout);
+  });
+};
+
 init();
 
+initFSA();
