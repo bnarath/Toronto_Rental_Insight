@@ -33,53 +33,53 @@ The applications that provide classified rental services like `Craigslist` and
 - **Load:** Loads the data to the `cloud MongoDB(Atlas) database.` ETL is separate from the cloud application. Serves as a separate functionality to extract, transform and preload the database. 
 
 - **Automation** - **The process of Extraction of rental data (only from Craigslist), Transform and Load is automated.**
- - **Scraper:** 
-   Crawls the Rental Data from Craigslist
- - **Scheduler: Hosted in Heroku as a separate Scheduling Application** 
-   Schedules ETL every day at 4.30 AM EDT (If you wonder why, There is no specific reason for this specific time !!)
- - **Differencer:**
-  - Updates the current and historical rental DB Tables. 
-  - Current rental data - consists of only the current available rental listings.
-  - Historic rental data - consists of all rental listings.
+  - **Scraper:** 
+    Crawls the Rental Data from Craigslist
+  - **Scheduler: Hosted in Heroku as a separate Scheduling Application** 
+    Schedules ETL every day at 4.30 AM EDT (If you wonder why, There is no specific reason for this specific time !!)
+  - **Differencer:**
+    - Updates the current and historical rental DB Tables. 
+    - Current rental data - consists of only the current available rental listings.
+    - Historic rental data - consists of all rental listings.
   
-A snippet of automated ETL process is shown below (heroku logs).
-```diff
-2020-09-26T04:30:00.001509+00:00 app[clock.1]: Started updateDB
-2020-09-26T04:34:04.395572+00:00 app[clock.1]: Finished craigs_list_api_call
-2020-09-26T04:34:05.423526+00:00 app[clock.1]: Finished differencer
-2020-09-26T04:34:06.736165+00:00 app[clock.1]: Finished instatiate_driver
-2020-09-26T04:34:13.404711+00:00 app[clock.1]: Finished craigs_list_scrape
-2020-09-26T04:34:13.434493+00:00 app[clock.1]: Finished clean_craigslist
-2020-09-26T04:34:13.448337+00:00 app[clock.1]: Finished geocode
-2020-09-26T04:34:13.924970+00:00 app[clock.1]: Finished fill_Lat_Long
-2020-09-26T04:34:13.953593+00:00 app[clock.1]: Finished clean_rental_for_merg
-2020-09-26T04:34:14.026133+00:00 app[clock.1]: Finished updateDB
-2020-09-26T04:34:14.033489+00:00 app[clock.1]: Finished Updating the DB
-```
+  A snippet of automated ETL process is shown below (heroku logs).
+  ```diff
+  2020-09-26T04:30:00.001509+00:00 app[clock.1]: Started updateDB
+  2020-09-26T04:34:04.395572+00:00 app[clock.1]: Finished craigs_list_api_call
+  2020-09-26T04:34:05.423526+00:00 app[clock.1]: Finished differencer
+  2020-09-26T04:34:06.736165+00:00 app[clock.1]: Finished instatiate_driver
+  2020-09-26T04:34:13.404711+00:00 app[clock.1]: Finished craigs_list_scrape
+  2020-09-26T04:34:13.434493+00:00 app[clock.1]: Finished clean_craigslist
+  2020-09-26T04:34:13.448337+00:00 app[clock.1]: Finished geocode
+  2020-09-26T04:34:13.924970+00:00 app[clock.1]: Finished fill_Lat_Long
+  2020-09-26T04:34:13.953593+00:00 app[clock.1]: Finished clean_rental_for_merg
+  2020-09-26T04:34:14.026133+00:00 app[clock.1]: Finished updateDB
+  2020-09-26T04:34:14.033489+00:00 app[clock.1]: Finished Updating the DB
+  ```
 
-```diff
-2020-09-28T04:34:28.051408+00:00 app[clock.1]: Finished craigs_list_api_call
-2020-09-28T04:34:28.999139+00:00 app[clock.1]: Finished differencer
-2020-09-28T04:34:31.631729+00:00 app[clock.1]: Finished instatiate_driver
-2020-09-28T04:36:11.449854+00:00 app[clock.1]: Finished craigs_list_scrape
-2020-09-28T04:36:11.494136+00:00 app[clock.1]: Finished clean_craigslist
-2020-09-28T04:36:14.459126+00:00 app[clock.1]: Finished fill_Lat_Long
-2020-09-28T04:36:14.520678+00:00 app[clock.1]: Finished clean_rental_for_merg
-2020-09-28T04:36:14.729932+00:00 app[clock.1]: Finished updateDB
-2020-09-28T04:36:14.737698+00:00 app[clock.1]: Finished Updating the DB
-```
+  ```diff
+  2020-09-28T04:34:28.051408+00:00 app[clock.1]: Finished craigs_list_api_call
+  2020-09-28T04:34:28.999139+00:00 app[clock.1]: Finished differencer
+  2020-09-28T04:34:31.631729+00:00 app[clock.1]: Finished instatiate_driver
+  2020-09-28T04:36:11.449854+00:00 app[clock.1]: Finished craigs_list_scrape
+  2020-09-28T04:36:11.494136+00:00 app[clock.1]: Finished clean_craigslist
+  2020-09-28T04:36:14.459126+00:00 app[clock.1]: Finished fill_Lat_Long
+  2020-09-28T04:36:14.520678+00:00 app[clock.1]: Finished clean_rental_for_merg
+  2020-09-28T04:36:14.729932+00:00 app[clock.1]: Finished updateDB
+  2020-09-28T04:36:14.737698+00:00 app[clock.1]: Finished Updating the DB
+  ```
 
-```diff
-2020-09-29T04:35:03.578897+00:00 app[clock.1]: Finished craigs_list_api_call
-2020-09-29T04:35:04.963784+00:00 app[clock.1]: Finished differencer
-2020-09-29T04:35:08.886718+00:00 app[clock.1]: Finished instatiate_driver
-2020-09-29T04:40:11.930050+00:00 app[clock.1]: Finished craigs_list_scrape
-2020-09-29T04:40:12.024977+00:00 app[clock.1]: Finished clean_craigslist
-2020-09-29T04:40:20.150364+00:00 app[clock.1]: Finished fill_Lat_Long
-2020-09-29T04:40:20.215436+00:00 app[clock.1]: Finished clean_rental_for_merg
-2020-09-29T04:40:20.488990+00:00 app[clock.1]: Finished updateDB
-2020-09-29T04:40:20.495897+00:00 app[clock.1]: Finished Updating the DB
-```
+  ```diff
+  2020-09-29T04:35:03.578897+00:00 app[clock.1]: Finished craigs_list_api_call
+  2020-09-29T04:35:04.963784+00:00 app[clock.1]: Finished differencer
+  2020-09-29T04:35:08.886718+00:00 app[clock.1]: Finished instatiate_driver
+  2020-09-29T04:40:11.930050+00:00 app[clock.1]: Finished craigs_list_scrape
+  2020-09-29T04:40:12.024977+00:00 app[clock.1]: Finished clean_craigslist
+  2020-09-29T04:40:20.150364+00:00 app[clock.1]: Finished fill_Lat_Long
+  2020-09-29T04:40:20.215436+00:00 app[clock.1]: Finished clean_rental_for_merg
+  2020-09-29T04:40:20.488990+00:00 app[clock.1]: Finished updateDB
+  2020-09-29T04:40:20.495897+00:00 app[clock.1]: Finished Updating the DB
+  ```
 ### Python - Flask
 **Handles request from front end Javascript provides the requested data in JSON format**
 - **API endpoints:** Hosts the API endpoints
