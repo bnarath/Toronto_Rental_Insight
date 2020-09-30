@@ -115,7 +115,7 @@ function filterInint(){
                 TorontoMap.removeLayer(intCrimeMarkerGroup);       
               }
             TorontoMap.removeLayer(rentalMarkerGroup);
-            ReadLayersDisplay(baseUrl+filteredURL);
+            //ReadLayersDisplay(baseUrl+filteredURL);
             var dataPromiseFilter= d3.json((baseUrl+filteredURL), function(rental){
                 //console.log(data);
                 //updateRentalMarkers(data);
@@ -132,7 +132,7 @@ function filterInint(){
                     iconColor: "white",
                     icon: 'fa-number'
                   });
-  
+
                   rentalMarkers.push(L.marker([feature.lat, feature.long], {
                     icon: rental
                   }).bindPopup(feature.title));
@@ -172,6 +172,26 @@ function filterInint(){
                   
                   //create layer
                   CrimeMarkerGroup = L.layerGroup(CrimeMarkers);
+                  TorontoMap.addLayer(rentalMarkerGroup);
+                  //TorontoMap.addLayer(CrimeMarkerGroup);
+                   // Create an overlayMaps object to hold the community asset layer
+                //     var overlayMaps = {
+                //         //"Average Income" : incomeChloropleuth,
+                //         "Community Services" : assetArray[0],
+                //         "Education & Employment": assetArray[1],
+                //         "Financial Services" : assetArray[2],
+                //         "Food & Housing" : assetArray[3],
+                //         "Health Services" : assetArray[4],
+                //         "Law & Government": assetArray[5],
+                //         "Tranportation" : assetArray[6]
+                //     };
+                //   var baseMaps = {
+                //     "Rental Postings" : rentalMarkerGroup,
+                //     "2019 Homicides" : CrimeMarkerGroup 
+                 //};
+                //L.control.layers(baseMaps, overlayMaps, {collapsed:true}).addTo(TorontoMap);
+                RentalCrimeInteraction(rentalMarkerGroup, fullcrime, TorontoMap)
+
 
                 });
                 
