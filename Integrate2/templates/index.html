@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Toronto Rental Insights</title>
+
+
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+  crossorigin=""/>
+
+  <!-- Icons -->
+  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../static/css/leaflet.extra-markers.min.css">
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  <!--SideBar-->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
+
+    <link rel="stylesheet" href="../static/css/leaflet-sidebar.css" />
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body, #map {
+            height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .lorem {
+            font-style: italic;
+            color: #AAA;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#filter" role="tab"><i class="fa fa-filter"></i>Filter</a></li>
+                <li><a href="#rental" role="tab"><i class="fa fa-building" alt="Rental Trends"></i></a>Rental Trends</li>
+                <li><a href="#crime" role="tab"><i class="fa fa-bomb" aria-hidden="true"></i>Crime Trends</a></li>
+                <li class="disabled"><a href="#rentalListing" role="tab"><i class="fa fa-home" aria-hidden="true"></i>Crime Trends</a></li>
+                <li class="disabled"><a href="#communityListing" role="tab"><i class="fa fa-university"></i>Filter</a></li>
+                
+                
+            </ul>
+
+            <ul role="tablist">
+                <li><a href="https://github.com/bnarath/Toronto_Rental_Insight/tree/master" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="rental">
+                <h1 class="sidebar-header">
+                    Rental Trends
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+                <form>
+                <br>
+                <br>
+                <label for="FSA_rent">Select FSA:</label>
+                <select name="fsa" id="fsa_rent">
+                </select>
+                <div id="bar_rentAvgRentPerRoomNum"></div>
+                <div id="bar_rentAvgIncome"></div>
+                <div id="bar_rentAvgAge"></div>
+                
+
+                
+                
+                </form>
+                
+                </div>
+
+            <div class="sidebar-pane" id="crime">
+                <h1 class="sidebar-header">Crime Rate Insights<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <form>
+                <br>
+                <br>
+                <label for="FSA_crime">Choose an FSA:</label>
+                <select name="fsa" id="fsa_crime">
+                </select>
+
+                <div id="bar_crime"></div>
+                <div id="bubble_crime"></div>
+                <!--<div id="map-id"></div>-->
+                
+                
+                </form>
+            </div>
+
+            <div class="sidebar-pane" id="filter">
+                <h1 class="sidebar-header">Filter<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <form>
+                <br>
+                <br>
+                
+                <i class="fa fa-usd" aria-hidden="true"></i><label for="price"> Select price range:</label><br>
+                        <label for="price_min">Min:</label>
+                        <select name="priceMin" id="priceMin"></select>
+                        </select>
+                    
+                        <label for="price_max">Max:</label>
+                        <select name="priceMax" id="priceMax"></select>
+                        </select><br>
+                    
+                        <i class="fa fa-bed" aria-hidden="true"></i><label for="bedrooms"> No of Bedrooms:</label>
+                        <select name="bedrooms" id="bedrooms">
+                        </select><br>
+                    
+                        <i class="fa fa-shower" aria-hidden="true"></i><label for="bathrooms"> No of Bathrooms:</label>
+                        <select name="bathrooms" id="bathrooms"></select>
+                        </select><br>  
+
+                        <i class="fa fa-shower" aria-hidden="true"></i><label for="FSA"> Select FSA:</label>
+                        <select name="fsa" id="fsa_filter"></select>
+                        </select> <br>
+                        <input type="button" id="submitFilter" value="Submit">
+                    
+                </form>
+            
+            </div>
+
+            <div class="sidebar-pane" id="rentalListing">
+                <h1 class="sidebar-header">Rental Listing Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <img id="rentalListingImg" src="../static/img/bengal-cat-relaxing-on-sofa-1336150-1279x852.jpg" alt="cat" width="450" height="300">
+                <div id="rentalInfo"></div>
+            </div>
+            <div class="sidebar-pane" id="communityListing">
+            <h1 class="sidebar-header">Community Asset Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <img id="communityListingImg" src="../static/img/bengal-cat-relaxing-on-sofa-1336150-1279x852.jpg" alt="cat" width="450" height="300">
+            <div id="communityInfo"></div>
+        </div>
+        </div>
+    </div>
+
+  <!-- The div that holds our map -->
+  <div id="map"></div>
+
+  <!--SideBar JS-->
+  <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+  <script src="../static/js/leaflet-sidebar.js"></script>
+  <!--Plotly scripts-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <!-- D3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+
+  <!-- MomentJS -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+  integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+  crossorigin=""></script>
+
+  <!-- Icons -->
+  <script src="../static/js/leaflet.extra-markers.min.js"></script>
+
+  <!-- polyfill.io is library for using newer JavaScript features in older browers (such as Object.assign) -->
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+  <!-- API Key -->
+  <script type="text/javascript" src="../static/js/config.js"></script>
+  
+  <!-- Our JavaScript -->
+  <script type="text/javascript" src="../static/js/app.js"></script>
+  <script type="text/javascript" src="../static/js/logic.js"></script>
+  <script type="text/javascript" src="../static/js/rentalListing.js"></script>
+  
+  <script type="text/javascript" src="../static/js/filter.js"></script>
+  <script type="text/javascript" src="../data/Toronto2.geojson"></script>
+
+
+</body>
+
+</html>

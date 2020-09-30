@@ -6,6 +6,15 @@ var circleCenterPoint = [0,0]; //gets the circle's center latlng
 var isInCircleRadius = false;
 
 
+// var MyDemoClass = L.Class.extend({
+
+//   // A property with initial value = 42
+//   myDemoProperty: 42,   
+
+//   // A method 
+//   myDemoMethod: function() { return this.myDemoProperty; }
+  
+// });
 
 
 function CreateMap(rental, crime){
@@ -58,7 +67,12 @@ function CreateMap(rental, crime){
         
         obj.on('click', function(e) {
           // marker clicked is e.target
-       
+          //print to console
+          console.log("Here");
+          sidebar.open('rentalListing',0);
+
+
+          
           // remove active circle if any
           if(activeCircle) {
             map.removeLayer(activeCircle);
@@ -66,7 +80,7 @@ function CreateMap(rental, crime){
           // draw a 10km circle with the same center as the marker 
           activeCircle = L.circle(e.target.getLatLng(), { radius: radius , color: "#ff0000" }).addTo(map);
           console.log(activeCircle.getRadius())
-          console.log(crime.length);
+          //console.log(crime.length);
           r = activeCircle.getRadius(); //in meters
           circleCenterPoint = activeCircle.getLatLng(); //gets the circle's center latlng
           if(crimeMarkerGroup) {
@@ -102,6 +116,10 @@ function CreateMap(rental, crime){
         collapsed: true
       }).addTo(map);
 
+      //sidebar
+var sidebar = L.control.sidebar('sidebar').addTo(map);
+      
+
 
 
 };
@@ -110,9 +128,9 @@ d3.csv('static/data/Rental_Craigslist.csv', function(rental){
 
   d3.csv('static/data/Crime.csv', function(fullcrime){
 
-  var murder = fullcrime.filter(d=>d.MCI=="Homicide");
-  console.log(murder);
-  CreateMap(rental, murder);
+  //var murder = fullcrime.filter(d=> d.MCI=="Homicide");
+  //console.log(murder);
+  CreateMap(rental);
 
       
 });
