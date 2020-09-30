@@ -5,8 +5,9 @@ function filterInint(){
     var selectedPriceMin="0";
     var selectedPriceMax="-1";
     var selectedFSA="";
-    var selectedBedrooms="1";
-    var selectedBathrooms="1";
+    var selectedBedroomsMin="0";
+    var selectedBedroomsMax="-1";
+    //var selectedBathrooms="1";
     //select dropdowns
     //select dropdown menu for rental 
     var rentalPrice=[500, 1000, 1500, 2000, 2500, 3000, 3500, 4000]
@@ -29,26 +30,32 @@ function filterInint(){
     //get available rental data
     
     var dataPromiseIncome= d3.json((baseUrl+availableRentalUrl),function(data){
-        var bathrooms= data.map(d=> d.bathrooms);
-        bathrooms=bathrooms.filter((item, i, ar) => ar.indexOf(item) === i);
-        bathrooms= bathrooms.filter(d => +d).sort();
+        //var bathrooms= data.map(d=> d.bathrooms);
+        //bathrooms=bathrooms.filter((item, i, ar) => ar.indexOf(item) === i);
+        //bathrooms= bathrooms.filter(d => +d).sort();
         var bedrooms= data.map(d=> d.bedrooms);
         bedrooms=bedrooms.filter((item, i, ar) => ar.indexOf(item) === i);
         bedrooms= bedrooms.filter(d => +d).sort();
 
-        var dropDownBedrooms= d3.select("#bedrooms")
-        dropDownBedrooms.append("option").text("All options");
+        var dropDownBedroomsMin= d3.select("#bedroomsMin")
+        dropDownBedroomsMin.append("option").text("All options");
         //give the dropdow id values
         bedrooms.forEach(element => {
-            dropDownBedrooms.append("option").text(element);
+            dropDownBedroomsMin.append("option").text(element);
+        });
+        var dropDownBedroomsMax= d3.select("#bedroomsMax")
+        dropDownBedroomsMax.append("option").text("All options");
+        //give the dropdow id values
+        bedrooms.forEach(element => {
+            dropDownBedroomsMax.append("option").text(element);
         });
         //select dropdown menu for price 
-        var dropDownBathrooms= d3.select("#bathrooms")
-        dropDownBathrooms.append("option").text("All options");
+        //var dropDownBathrooms= d3.select("#bathrooms")
+        //dropDownBathrooms.append("option").text("All options");
         //give the dropdow id values
-        bathrooms.forEach(element => {
-            dropDownBathrooms.append("option").text(element);
-        });
+        //bathrooms.forEach(element => {
+            //dropDownBathrooms.append("option").text(element);
+        //});
         dataM = data.filter(d =>d.FSA.substring(0,1)=="M");
         FSA =  dataM.map(d => d.FSA).reverse();
         FSA = FSA.filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -74,20 +81,27 @@ function filterInint(){
                 selectedPriceMax="-1";
             }
         });
-        dropDownBedrooms.on("change", function(){
+        dropDownBedroomsMin.on("change", function(){
             var i= this.selectedIndex;
-            selectedBedrooms= bedrooms[i-1];
+            selectedBedroomsMin= bedrooms[i-1];
             if(i==0){
-                selectedBedrooms="1";
+                selectedBedroomsMin="0";
             }
         });
-        dropDownBathrooms.on("change", function(){
+        dropDownBedroomsMax.on("change", function(){
             var i= this.selectedIndex;
-            selectedBathrooms= bathrooms[i-1];
+            selectedBedroomsMax= bedrooms[i-1];
             if(i==0){
-                selectedBathrooms="1";
+                selectedBedroomsMax="-1";
             }
         });
+        //dropDownBathrooms.on("change", function(){
+        //     var i= this.selectedIndex;
+        //     selectedBathrooms= bathrooms[i-1];
+        //     if(i==0){
+        //         selectedBathrooms="1";
+        //     }
+        // });
         dropDownFSA.on("change", function(){
             var i= this.selectedIndex;
             selectedFSA= FSA[i-1];
@@ -102,11 +116,11 @@ function filterInint(){
             //construct the filtered url
             var filteredUrl;
             if(selectedFSA==""){
-                var filteredURL= `availableRental?price=[${selectedPriceMin},${selectedPriceMax}]&bedrooms=[${selectedBedrooms},${selectedBedrooms}]&bathrooms=[${selectedBathrooms},${selectedBathrooms}]`;
+                var filteredURL= `availableRental?price=[${selectedPriceMin},${selectedPriceMax}]&bedrooms=[${selectedBedroomsMin},${selectedBedroomsMax}]`;
            
             }
             else{
-            var filteredURL= `availableRental?price=[${selectedPriceMin},${selectedPriceMax}]&bedrooms=[${selectedBedrooms},${selectedBedrooms}]&bathrooms=[${selectedBathrooms},${selectedBathrooms}]&FSA=${selectedFSA}`;
+            var filteredURL= `availableRental?price=[${selectedPriceMin},${selectedPriceMax}]&bedrooms=[${selectedBedroomsMin},${selectedBedroomsMax}]&FSA=${selectedFSA}`;
             }
             console.log(filteredURL);
             //get data from constructed url
@@ -115,7 +129,7 @@ function filterInint(){
                 TorontoMap.removeLayer(intCrimeMarkerGroup);       
               }
             TorontoMap.removeLayer(rentalMarkerGroup);
-            ReadLayersDisplay(baseUrl+filteredURL);
+            //ReadLayersDisplay(baseUrl+filteredURL);
             var dataPromiseFilter= d3.json((baseUrl+filteredURL), function(rental){
                 //console.log(data);
                 //updateRentalMarkers(data);
@@ -132,7 +146,7 @@ function filterInint(){
                     iconColor: "white",
                     icon: 'fa-number'
                   });
-  
+
                   rentalMarkers.push(L.marker([feature.lat, feature.long], {
                     icon: rental
                   }).bindPopup(feature.title));
@@ -172,6 +186,26 @@ function filterInint(){
                   
                   //create layer
                   CrimeMarkerGroup = L.layerGroup(CrimeMarkers);
+                  TorontoMap.addLayer(rentalMarkerGroup);
+                  //TorontoMap.addLayer(CrimeMarkerGroup);
+                   // Create an overlayMaps object to hold the community asset layer
+                //     var overlayMaps = {
+                //         //"Average Income" : incomeChloropleuth,
+                //         "Community Services" : assetArray[0],
+                //         "Education & Employment": assetArray[1],
+                //         "Financial Services" : assetArray[2],
+                //         "Food & Housing" : assetArray[3],
+                //         "Health Services" : assetArray[4],
+                //         "Law & Government": assetArray[5],
+                //         "Tranportation" : assetArray[6]
+                //     };
+                //   var baseMaps = {
+                //     "Rental Postings" : rentalMarkerGroup,
+                //     "2019 Homicides" : CrimeMarkerGroup 
+                 //};
+                //L.control.layers(baseMaps, overlayMaps, {collapsed:true}).addTo(TorontoMap);
+                RentalCrimeInteraction(rentalMarkerGroup, fullcrime, TorontoMap)
+
 
                 });
                 
