@@ -198,6 +198,7 @@ Otherwise, there will be three versions of the sidebar based on how users intera
 * Heat map of Toronto showing crime incidence
 
 <img src="Images/rentalListing.png" alt="Headline" width="1000"/>
+<img src="Images/crimCircle&HeatMap.png" alt="Headline" width="1000"/>
 
 #### Click on Community Asset Marker
 * Community Asset information 
