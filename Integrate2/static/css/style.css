@@ -1,0 +1,223 @@
+
+.legend {
+  line-height: 30px;
+  color: #555;
+  background-color: white;
+  padding: 10px;
+}
+
+.legend .circle {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: 8px;
+
+}
+.legend i {
+  width: 40px;
+  height: 20px;
+  float: left;
+  margin-right: 8px;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+p{
+  font-size: 1em;
+  LINE-HEIGHT:25px;
+
+}
+h2{
+  font-size: 1.5em;
+  LINE-HEIGHT:25px;
+}
+label{
+  font-size: 1.5em;
+  LINE-HEIGHT:25px;
+}
+option{
+  font-size: 2em;
+  LINE-HEIGHT:25px;
+}
+#form-group p, input{
+  font-size: 1.5em;
+  LINE-HEIGHT:25px;
+}
+
+#map,
+body,
+html {
+  height: 100%;
+}
+
+.leaflet-control-layers{
+  font-size: 20px;
+  color: #555;
+}
+
+.leaflet-popup-content{
+  font-size: 20px;
+  width: 100px;
+}
+
+.leaflet-popup-content-wrapper{
+  background-color: rgb(223, 219, 219);
+  color: #555;
+  line-height: 30px;
+}
+
+.leaflet-control{
+  font-size: 20px;
+}
+
+#rentalListing{
+  height: 100%;
+  width:100%;
+  padding: 0;
+  margin: 0;
+}
+
+#crime-heatmap {
+  height: 75vh;
+  width:100vw;
+  padding: 0px;
+  margin: 0px;
+}
+#rentalListingImg, #communitylListingImg {
+  height: 75vh;
+  width:100vw;
+  padding: 0px;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  
+}
+#bar_rentAvgIncome, #line_rentTime {
+  height: 75vh;
+  width:100vw;
+  padding: 0;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+.CS{
+  color: rgb(235, 201, 8);
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 25px;
+}
+
+.EE{
+  color:rgb(214, 13, 13);
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 25px;
+}
+
+.FS{
+  color: orange;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 25px;
+}
+
+.FH{
+  color:rgb(7, 161, 7);
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 25px;
+}
+
+.HS{
+  color: rgb(168, 9, 168);
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 25px;
+}
+
+.LG{
+  color: rgb(15, 59, 100);
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 25px;
+}
+
+.TR{
+  color: rgb(14, 248, 236);
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 25px;
+}
+
+.legend {
+  line-height: 30px;
+  color: #555;
+  background-color: white;
+  padding: 10px;
+}
+
+.legend .circle {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: 8px;
+
+}
+.legend i {
+  width: 40px;
+  height: 20px;
+  float: left;
+  margin-right: 8px;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#map,
+body,
+html {
+  height: 100%;
+}
+
+.leaflet-control-layers{
+  font-size: 20px;
+  color: #555;
+}
+
+.leaflet-popup-content{
+  font-size: 20px;
+  width: 100px;
+}
+
+.leaflet-popup-content-wrapper{
+  background-color: rgb(223, 219, 219);
+  color: #555;
+  line-height: 30px;
+}
+
+.leaflet-control{
+  font-size: 20px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  #crime-heatmap, #rentalListingImg, #communitylListingImg{
+    width: 305px; } }
+@media (min-width: 992px) and (max-width: 1199px) {
+  #crime-heatmap, #rentalListingImg, #communitylListingImg, #bar_rentAvgIncome, #line_rentTime {
+    width: 390px; } }
+@media (min-width: 1200px) {
+  #crime-heatmap, #rentalListingImg, #communitylListingImg, #bar_rentAvgIncome, #line_rentTime {
+    width: 460px; } }

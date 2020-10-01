@@ -133,3 +133,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+Community Assets/data/config.py
+Community Assets/static/js/config.js

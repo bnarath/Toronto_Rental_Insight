@@ -154,7 +154,7 @@ def clean_craigslist(DF):
     #Convert the apartment feature none to ''(string)
     DF['apartment_feature'].fillna(value=' ', inplace=True)#A string val
     #Combine the "attributes", "apartment_feature", "posting" together as "text" column
-    DF["text"] = DF.apply(lambda x: x["attributes"]+x["apartment_feature"]+x["posting"], axis=1)
+    DF["text"] = DF.apply(lambda x: (x["attributes"] if x["attributes"] else "")+ (x["apartment_feature"] if x["apartment_feature"] else "")+(x["posting"] if x["posting"] else ""), axis=1)
     #Use DF["text"] for all further extractions 
     print("Finished clean_craigslist")   
     return DF
@@ -306,6 +306,7 @@ def clean_rental_for_merge(df):
     DF['id'] = DF['id'].map(lambda x: 'c_'+str(x))
     #Change date
     DF.post_published_date = DF.post_published_date.map(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M").strftime("%Y-%m-%d"))
+    DF.fillna("", inplace=True)
     print("Finished clean_rental_for_merg")  
     return DF
 
