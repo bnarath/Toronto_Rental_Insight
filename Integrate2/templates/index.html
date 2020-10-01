@@ -4,25 +4,28 @@
   <meta charset="UTF-8">
   <title>Toronto Rental Insights</title>
     <!--Bootstrap-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet">
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
-  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
-  crossorigin=""/>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin=""/>
 
-  <!-- Icons -->
-  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <link rel="stylesheet" href="../static/css/leaflet.extra-markers.min.css">
+    <!-- Icons -->
+    <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../static/css/leaflet.extra-markers.min.css">
 
-  <!-- Our CSS -->
-  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
-  <link rel="stylesheet" type="text/css" href="../static/css/style2.css">
-  <!--SideBar-->
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- panel -->
+    <link rel="stylesheet" href="../static/css/leaflet-panel-layers.css">
+
+    <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    
+    <!--SideBar-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
 
@@ -73,26 +76,28 @@
             <div class="sidebar-pane" id="rental">
                 <h1 class="sidebar-header">
                     Rental Trends
-                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                    <span class="sidebar-close">
+                        <i class="fa fa-caret-left"></i>
+                    </span>
                 </h1>
-                <form>
-                <br>
-                <br>
-                <label for="FSA_rent">Select FSA:</label>
-                <select name="fsa" id="fsa_rent">
-                </select>
-                <div id="bar_rentAvgRentPerRoomNum"></div>
+                    <!-- <form> -->
+                    <!-- <br>
+                    <br>
+                    <label for="FSA_rent">Select FSA:</label>
+                    <select name="fsa" id="fsa_rent">
+                    </select> -->
                 <div id="bar_rentAvgIncome"></div>
-                <div id="bar_rentAvgAge"></div>
+                <div id="line_rentTime"></div>
+                <!-- <div id="bar_rentAvgAge"></div> -->
                 
 
                 
                 
-                </form>
+                <!-- </form> -->
                 
             </div>
 
-            <div class="sidebar-pane" id="crime">
+            <!-- <div class="sidebar-pane" id="crime">
                 <h1 class="sidebar-header">Crime Rate Insights<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
                 <form>
                 <br>
@@ -103,21 +108,24 @@
 
                 <div id="bar_crime"></div>
                 <div id="bubble_crime"></div>
-                <!--<div id="map-id"></div>-->
+                <div id="map-id"></div>
                 
                 
                 </form>
-            </div>
+            </div> -->
 
             <div class="sidebar-pane" id="filter">
                 <h1 class="sidebar-header">Filter<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
                 <div class="container mt-5">
                     <div class="row">
                         <div class="col">
-    
+
                             <form>
                                 <div class="form-group">
-                                    <p> Select price range:</p>
+                                    <label> Select price range:</label>
+                                </div>
+                                <div class="form-group">
+                                    
                                     <label for="priceMin">Min:</label>
                                     <select name="priceMin" id="priceMin"></select>
                                 </div>
@@ -127,9 +135,13 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <p>Select Number of Bedrooms (range)</p>
+                                    <label>Select Number of Bedrooms (range)</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bedroomsMin">Min:</label>
                                     <select name="bedroomsMin" id="bedroomsMin">
                                     </select>
+                                    <label for="bedroomsMin">Max:</label>
                                     <select name="bedroomsMax" id="bedroomsMax">
                                     </select>
                                 </div>
@@ -144,7 +156,7 @@
                                     </select>
                                 </div>
                                 
-                                <input type="button" id="submitFilter" value="Submit">
+                                <input type="button" id="submitFilter" value="Apply Filter" style="background-color: rgba(0, 102, 255, 0.74); color: cornsilk; ">
                                 
                                 
                                     
@@ -155,18 +167,34 @@
                         
                     </div>
                 </div>
-                    
+                
             </div>
             <div class="sidebar-pane" id="rentalListing">
-                    <h1 class="sidebar-header">Rental Listing Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-                    <img id="rentalListingImg" src="../static/img/coming-soon-2461832_1280.jpeg" alt="rental" >
+            
+            <h1 class="sidebar-header">Rental Listing Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <div class="card mb-3" style="margin-right: 5px;">
+                <img class="card-img-top" id="rentalListingImg" src="../static/img/coming-soon-2461832_1280.jpeg" alt="rental" >
+                <div class="card-body">
                     <div id="rentalInfo"></div>
+                    <h3>Crime Rate Heatmap</h3>
                     <div id="crime-heatmap"></div>
+                    
+                </div>
+                
+
+            </div>
+                
             </div>
             <div class="sidebar-pane" id="communityListing">
                 <h1 class="sidebar-header">Community Asset Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-                <img id="communityListingImg" src="../static/img/community_assets.jpg" alt="community">
-                <div id="communityInfo"></div>
+                <div class="card mb-3" style="margin-right: 5px;">
+                    <img class="card-img-top" id="communityListingImg" src="../static/img/community_assets.jpg" alt="community">
+                    <div class="card-body">
+                        <div id="communityInfo"></div>
+                    </div>
+                </div>
+                
+                
             </div>
         </div>
     </div>
@@ -198,6 +226,8 @@
 
     <!-- Icons -->
     <script src="../static/js/leaflet.extra-markers.min.js"></script>
+    <!-- Panel -->
+  <script src="../static/js/leaflet-panel-layers.js"></script>
 
     <!-- polyfill.io is library for using newer JavaScript features in older browers (such as Object.assign) -->
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
@@ -213,7 +243,7 @@
     <script type="text/javascript" src="../static/js/rentalListing.js"></script>
     
     <script type="text/javascript" src="../static/js/filter.js"></script>
-    <script type="text/javascript" src="../data/Toronto2.geojson"></script>
+
 
 
 </body>
