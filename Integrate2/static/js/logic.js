@@ -543,11 +543,7 @@ function createMap (assetArray, rental, crime, data) {
                     dataDisplayed.push(data[i]);
                     allCrimeMarkers.push(L.marker([data[i].lat, data[i].long], {
                     icon: crimeIcon
-                    }).bindPopup(data[i].MCI).on('click', function(e){
-                      //open sidebar crime tab when a crime is clicked
-                      sidebar.open("crime");
-                      displayCrime(dataDisplayed);
-                    })
+                    }).bindPopup(data[i].MCI)
                     );
                 }
             };
