@@ -1,6 +1,8 @@
 # Toronto Rental Insight App
 This project is a continuation of the Toronto_Rental_ETL_Project. The Toronto_Rental_ETL_Project scraped, cleaned, transformed and stored data from multiple data sources and made it available for use through a Flask API which can be found [here](https://github.com/bnarath/Toronto_Rental_ETL_Project/blob/master/README.md). **This project aims to further automate the task of acquiring the data by using a scheduler that will scrape the data sources on a daily basis and update the database and provide the much granular data using improvised API services. This project also aims to make this data available to users for exploration through the creation of a user friendly, interactive dashboard, and finally hosting the application in the cloud.**
 
+### Check out the Final Product: [Here](https://etlinsightapi.herokuapp.com/)
+
 
 ## Project Intro/Objective
 The applications that provide classified rental services like `Craigslist` and `Kijiji` **focus on providing details regarding only the listed rentals. That doesn't necessarily mean all what the users are looking for.**  One would be truly interested to know `how safe the neighbourhood is?` What are `the community services available` in the neighborhood to use?, What is the `socio-economic status of the location (like average income and age) ?` **That is what this project is all about; to provide the users with all they want about and around the rental listings!!** The purpose of this project is to help users find a rental property that fits within their budget as well as other requirements such as being located in a crime free neighborhood and is in close proximity to community services such as schools and healthcare centers. To be specific, the purpose of this project is to help users find a rental property that fits within their budget as well as other requirements such as being located in a crime free neighborhood and is in close proximity to community services such as schools and healthcare centers.
@@ -198,6 +200,7 @@ Otherwise, there will be three versions of the sidebar based on how users intera
 * Heat map of Toronto showing crime incidence
 
 <img src="Images/rentalListing.png" alt="Headline" width="1000"/>
+<img src="Images/crimCircle&HeatMap.png" alt="Headline" width="1000"/>
 
 #### Click on Community Asset Marker
 * Community Asset information 
