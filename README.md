@@ -186,7 +186,6 @@ By default/opening dashboard, the side bar contains dropdown menus that enable u
 
 <img src="Images/default.png" alt="Headline" width="1000"/>
 <img src="Images/filterOpen.png" alt="Headline" width="1000"/>
-<img src="Images/filterOpen.png" alt="Headline" width="1000"/>
 <img src="Images/appliedFilter.png" alt="Headline" width="1000"/>
 
 A filter button at the top of the sidebar enables users to toggle back to this view. 
@@ -203,6 +202,7 @@ Otherwise, there will be three versions of the sidebar based on how users intera
 #### Click on Community Asset Marker
 * Community Asset information 
 <img src="Images/communityInfo.png" alt="Headline" width="1000"/>
+<img src="Images/allCommunityServices.png" alt="Headline" width="1000"/>
 
 #### Click on FSA
 
