@@ -1,11 +1,15 @@
 //test json files
 
+//const { rootCertificates } = require("tls");
+
 // var path = '../static/js/crimeLastYear.json';
 
 // d3.json(path, function(data) {
 //   console.log(data)
 //         });
+
 var heatmap;
+var curr_zoom=9;
 var heatmapMarker = false;
 var activeCircle = false;
 var intCrimeMarkerGroup = L.layerGroup([]);
@@ -19,8 +23,26 @@ var CrimeMarkerGroup;
 var assetArray;
 var rentalDetails=[];
 var dataDisplayed=[];
-var rentalPath = `${url}availableRental`;
+//var rentalPath = `${url}availableRental`;
 //var rentalPath ="https://sogramemon.github.io/plotly-javascript-challenge/data/minavailableRental.json";
+customCircleMarker = L.CircleMarker.extend({ 
+  options: {     
+    agency_name:"",        
+    address:"", 
+    category:"", 
+    office_phone:"", 
+    crisis_phone:"", 
+    toll_free_phone:"", 
+    e_mail:"", 
+    fees:"", 
+    service_name:"", 
+    website:"", 
+    url:"", 
+    hours:"", 
+    service_description:"", 
+    eligibility:""          
+  }
+  });
 
 
 function createHeatmap(){
@@ -103,7 +125,7 @@ function createMap (assetArray, rental, crime, data) {
         onEachFeature: function(feature, layer) {
           layer.bindTooltip(feature.properties.CFSAUID).on('click', function(e){
             //deactivate crime circle
-            console.log("here");
+            //console.log("here");
             //sidebar open rental trends when FSA clicked
             sidebar.open("rental");
             //bind data
@@ -112,23 +134,53 @@ function createMap (assetArray, rental, crime, data) {
           }).addTo(FSA)
         });
   
-      // Create an overlayMaps object to hold the community asset layer
-    var overlayMaps = {
-        //"Average Income" : incomeChloropleuth,
-        "Community Services" : assetArray[0],
-        "Education & Employment": assetArray[1],
-        "Financial Services" : assetArray[2],
-        "Food & Housing" : assetArray[3],
-        "Health Services" : assetArray[4],
-        "Law & Government": assetArray[5],
-        "Tranportation" : assetArray[6]
-      };
+      //create overlay object
+      var overLayers = [{
+        collapsed: true,
+        group: "Community Assets", 
+        layers:[{
+          name: '<p class="CS"> Community Services </p>',
+          layer: assetArray[0]
+        },
+        {
+          name: '<p class="EE"> Education & Employment </p>',
+          layer: assetArray[1]
+        },
+        {
+          name: '<p class="FS"> Financial Services </p>',
+          layer: assetArray[2]
+        },
+        {
+          name: '<p class="FH"> Food & Housing </p>',
+          layer: assetArray[3]
+        },
+        {
+          name: '<p class="HS"> Health Services </p>',
+          layer: assetArray[4]
+        },
+        {
+          name: '<p class="LG"> Law & Government </p>',
+          layer: assetArray[5]
+        },
+        {
+          name: '<p class="TR"> Transportation </p>',
+          layer: assetArray[6]
+        }],
+        
+      }];
   
-      // Define a baseMaps object to hold our base layers
-      var baseMaps = {
-            "Rental Postings" : rental,
-            "2019 Homicides" : crime
-        };
+  // Define a baseMaps object to hold our base layers
+  var baseLayers = [
+    {
+      name:  "Rental Postings",
+      layer: rental
+    },
+    {
+      name:  '2019 Homicides',
+      layer: crime
+    },
+  ];
+
     
   
     // create tile layer
@@ -165,9 +217,9 @@ function createMap (assetArray, rental, crime, data) {
     TorontoMap.options.minZoom = 12;
   
     // Pass map layers into layer control and add the layer control to the map
-    L.control.layers(baseMaps, overlayMaps, {collapsed:true}).addTo(TorontoMap);
+  TorontoMap.addControl( new L.Control.PanelLayers(baseLayers, overLayers, {collapsibleGroups: true}));
   
-    mapLegend(TorontoMap)
+    //mapLegend(TorontoMap)
   
     RentalCrimeInteraction(rental, data, TorontoMap)
   
@@ -180,7 +232,7 @@ function createMap (assetArray, rental, crime, data) {
       //create community asset layers
   
     //var communityAssetpath = `${url}communityAssets`;
-    var communityAssetpath = "https://sogramemon.github.io/plotly-javascript-challenge/data/communityAssets.json";
+    //var communityAssetpath = "https://sogramemon.github.io/plotly-javascript-challenge/data/communityAssets.json";
   
     var servicesAsset = new L.LayerGroup();
     var healthAsset = new L.LayerGroup();
@@ -200,25 +252,25 @@ function createMap (assetArray, rental, crime, data) {
           var agencyName = row.agency_name;
       
           if (row.category == "Community Services") {
-            markerAllocation(agencyName, category, lat, long, servicesAsset)
+            markerAllocation(agencyName, category, lat, long, servicesAsset, row)
           }
           else if (row.category == "Education & Employment") {
-            markerAllocation(agencyName,category, lat, long, educationAsset)
+            markerAllocation(agencyName,category, lat, long, educationAsset, row)
           }
           else if (row.category == "Financial Services") {
-            markerAllocation(agencyName, category, lat, long, financialAsset)
+            markerAllocation(agencyName, category, lat, long, financialAsset, row)
           }
           else if (row.category == "Food & Housing") {
-            markerAllocation(agencyName, category, lat, long, foodAsset)
+            markerAllocation(agencyName, category, lat, long, foodAsset, row)
           }
           else if (row.category == "Health Services") {
-            markerAllocation(agencyName, category, lat, long, healthAsset)
+            markerAllocation(agencyName, category, lat, long, healthAsset, row)
           }
           else if (row.category == "Law & Government") {
-            markerAllocation(agencyName, category, lat, long, lawAsset)
+            markerAllocation(agencyName, category, lat, long, lawAsset, row)
           }
           else if (row.category == "Transportation") {
-            markerAllocation(agencyName, category, lat, long, transportAsset)
+            markerAllocation(agencyName, category, lat, long, transportAsset, row)
           }
           else {
           }
@@ -264,7 +316,7 @@ function createMap (assetArray, rental, crime, data) {
   
                 //read crime dataset
                 //var crimePath = `${url}crimeLastSixMonths`;
-                var crimePath = "https://sogramemon.github.io/plotly-javascript-challenge/data/crimeLastSixMonths.json";
+                //var crimePath = "https://sogramemon.github.io/plotly-javascript-challenge/data/crimeLastSixMonths.json";
   
                 d3.json(crimePath, function(fullcrime){
   
@@ -372,22 +424,45 @@ function createMap (assetArray, rental, crime, data) {
   
   //function to create markers and add to layer
   
-  function markerAllocation(agencyName, category, lat, long, array){
+  function markerAllocation(agencyName, category, lat, long, array, row){
   
       // For each station, create a marker and bind a popup with the station's name
-      var marker = L.circle([lat, long], {
+      // var marker = L.circle([lat, long], {
+      //   color: assestColors(category),
+      //   fillColor: assestColors(category),
+      //   fillOpacity: 0.4,
+      //   radius: 90
+      //   });
+       
+
+      var marker= new customCircleMarker([lat, long], {
         color: assestColors(category),
         fillColor: assestColors(category),
         fillOpacity: 0.4,
-        radius: 90
-        });
-  
+        radius: 7,
+        agency_name:row.agency_name,        
+        address: row.address, 
+        category: row.categories, 
+        office_phone: row.office_phone, 
+        crisis_phone: row.crisis_phone, 
+        toll_free_phone: row.toll_free, 
+        e_mail: row.e_mail, 
+        fees: row.fees, 
+        service_name: row.service_name, 
+        website: row.website, 
+        url:row.url, 
+        hours:row.hours, 
+        service_description:row.service_description, 
+        eligibility:row.eligibility 
+      });
+      
+
       marker.bindPopup(agencyName)
       .on('click', function(e){
         // open sidebar when community asset clicked
         sidebar.open("communityListing");
         //select div tags and bind data
-        displayCommunityListing(agencyName, category, lat, long);
+        displayCommunityListing(e);
       });
       
       // Add the marker to array
@@ -429,11 +504,11 @@ function createMap (assetArray, rental, crime, data) {
 
             sidebar.open('rentalListing',0);
             if(heatmapMarker){
-              curr_zoom = console.log(heatmap.getZoom());
+              curr_zoom = heatmap.getZoom();
               heatmap.removeLayer(heatmapMarker);
             }
             heatmapMarker = L.marker(e.target.getLatLng(), {markerColor:'red'}).addTo(heatmap);
-            heatmap.setView([43.728754, -79.388561], 9);
+            heatmap.setView([43.728754, -79.388561], curr_zoom);
          
             if(intCrimeMarkerGroup) {
               map.removeLayer(intCrimeMarkerGroup);
@@ -451,7 +526,7 @@ function createMap (assetArray, rental, crime, data) {
                }).addTo(map);
   
             r = activeCircle.getRadius(); //in meters
-            console.log("In function");
+            //console.log("In function");
             circleCenterPoint = activeCircle.getLatLng(); //gets the circle's center latlng
             
             allCrimeMarkers = [];

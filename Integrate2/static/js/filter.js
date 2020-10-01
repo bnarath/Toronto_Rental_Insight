@@ -1,5 +1,5 @@
-var baseUrl= "http://127.0.0.1:5000/";
-var availableRentalUrl= "availableRental";
+//var baseUrl= url;
+//var availableRentalUrl= "availableRental";
 function filterInint(){
     //define parameters
     var selectedPriceMin="0";
@@ -114,15 +114,15 @@ function filterInint(){
         var button = d3.select("#submitFilter");
         button.on('click', function(){
             //construct the filtered url
-            var filteredUrl;
+            // var filteredUrl;
             if(selectedFSA==""){
-                var filteredURL= `availableRental?price=[${selectedPriceMin},${selectedPriceMax}]&bedrooms=[${selectedBedroomsMin},${selectedBedroomsMax}]`;
+                filteredURL= `availableRental?price=[${selectedPriceMin},${selectedPriceMax}]&bedrooms=[${selectedBedroomsMin},${selectedBedroomsMax}]`;
            
             }
             else{
-            var filteredURL= `availableRental?price=[${selectedPriceMin},${selectedPriceMax}]&bedrooms=[${selectedBedroomsMin},${selectedBedroomsMax}]&FSA=${selectedFSA}`;
+                filteredURL= `availableRental?price=[${selectedPriceMin},${selectedPriceMax}]&bedrooms=[${selectedBedroomsMin},${selectedBedroomsMax}]&FSA=${selectedFSA}`;
             }
-            console.log(filteredURL);
+            //console.log(filteredURL);
             //get data from constructed url
             if(activeCircle) {
                 TorontoMap.removeLayer(activeCircle);   
@@ -159,7 +159,7 @@ function filterInint(){
   
                 //read crime dataset
                 //var crimePath = `${url}crimeLastSixMonths`;
-                var crimePath = "https://sogramemon.github.io/plotly-javascript-challenge/data/crimeLastSixMonths.json";
+                //var crimePath = "https://sogramemon.github.io/plotly-javascript-challenge/data/crimeLastSixMonths.json";
   
                 d3.json(crimePath, function(fullcrime){
   
