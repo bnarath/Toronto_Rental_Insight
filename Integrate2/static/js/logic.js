@@ -86,7 +86,7 @@ function createHeatmap(){
   }).addTo(myMap);
 
   //var url = "http://127.0.0.1:5000/CrimeLastMonth";
-  d3.json(url+"crimeLastMonth", function(fullcrime){
+  d3.json(url+"CrimeLastMonth", function(fullcrime){
     var heatArray = fullcrime.map(d=>[d.lat, d.long, findOpacity(d.MCI)]);
     var heat = L.heatLayer(heatArray, {
       radius: 20,
