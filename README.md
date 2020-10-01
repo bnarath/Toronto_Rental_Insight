@@ -159,7 +159,7 @@ FrontEnd Consists of the `HTML/CSS/Javascript stack`. Javscript retrieves the da
 
 We created wireframes of the final product we had in mind. The wireframes below show the intial design developed by a our entire team with the user in mind.
 
-<img src="Images/filter.png" alt="Headline" width="1000"/>
+<img src="Images/Wireframe_collage.png" alt="Headline" width="1000"/>
 
 ## The Final Product
 
