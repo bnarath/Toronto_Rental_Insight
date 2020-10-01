@@ -157,31 +157,39 @@ FrontEnd Consists of the `HTML/CSS/Javascript stack`. Javscript retrieves the da
 
 ## Frontend Wireframes 
 
-The dashboard will consist of map and a sidebar. 
-
-### Map
-
-The leaflet library will be used to display a map of Toronto with FSA boundaries outlined. By default, the map will show markers for the daily rental postings. The map will include a toggle bar that will enable users to add/remove markers for:
-* Rental postings
-* Community assets
-* Crime incidence (past 6 months).   
-
-The map will included the following functionalities:
-* tooltip when hovering over markers
-* Upon clicking on a rental posting marker, a circle will show a 1 km radius around the marker. Other markers will appear within that circle's radius showing crime incidences that occurred in the past 6 months. 
-
-
-### Sidebar
-
-By default/opening dashboard, the side bar will contain dropdown menus that enable users to filter the rental posting markers display by:
-* FSA
-* Rental cost
-* Number of bedrooms
-* Number of washrooms
+We created wireframes of the final product we had in mind. The wireframes below show the intial design developed by a our entire team with the user in mind.
 
 <img src="Images/filter.png" alt="Headline" width="1000"/>
 
-A filter button at the top of the sidebar will enable users to toggle back to this view. 
+## The Final Product
+
+### Map
+
+The leaflet library displays a map of Toronto with FSA boundaries outlined. By default, the map shows markers for the daily rental postings. The map includes a toggle bar that enables users to add/remove markers for:
+* Rental postings
+* Community assets
+* Homocides in Crime (past 6 months).   
+
+The map includes the following functionalities:
+* tooltip when hovering over markers
+* Upon clicking on a rental posting marker, a circle shows a 1 km radius around the marker. Other markers appear within that circle's radius showing crime incidences that occurred in the past 6 months. 
+
+<img src="Images/mapTooltip.png" alt="Headline" width="1000"/>
+<img src="Images/mapCommunityToogle.png" alt="Headline" width="1000"/>
+
+### Sidebar
+
+By default/opening dashboard, the side bar contains dropdown menus that enable users to filter the rental posting markers display by:
+* FSA
+* Rental cost
+* Number of bedrooms
+
+<img src="Images/default.png" alt="Headline" width="1000"/>
+<img src="Images/filterOpen.png" alt="Headline" width="1000"/>
+<img src="Images/filterOpen.png" alt="Headline" width="1000"/>
+<img src="Images/appliedFilter.png" alt="Headline" width="1000"/>
+
+A filter button at the top of the sidebar enables users to toggle back to this view. 
 
 Otherwise, there will be three versions of the sidebar based on how users interact with the map.
 
@@ -190,27 +198,23 @@ Otherwise, there will be three versions of the sidebar based on how users intera
 * Bar chart of average income with FSA compared to Toronto overall
 * Heat map of Toronto showing crime incidence
 
-<img src="Images/rental.png" alt="Headline" width="1000"/>
+<img src="Images/rentalListing.png" alt="Headline" width="1000"/>
 
 #### Click on Community Asset Marker
 * Community Asset information 
-<img src="Images/community.png" alt="Headline" width="1000"/>
+<img src="Images/communityInfo.png" alt="Headline" width="1000"/>
 
 #### Click on FSA
 
-The sidebar will have buttons to toggle views between crime data and rental posting data.
+The sidebar shows charts explaning the rental trends such as age and income by age.
 
 Rental posting data
 * bar graph displaying average cost to rent in FSA (data scrapped that day) by number of bedrooms.
 * line graph displaying average to rent in FSA over time (historical/trending data) by number of bedrooms.
 
-<img src="Images/rental_fsa.png" alt="Headline" width="1000"/>
+<img src="Images/incomeTrends.png" alt="Headline" width="1000"/>
+<img src="Images/rentTimeTrends.png" alt="Headline" width="1000"/>
 
-Crime data
-* bar graph displaying average cost to rent in FSA (data scrapped that day) by number of bedrooms.
-* line graph displaying average to rent in FSA over time (historical/trending data) by number of bedrooms.
-
-<img src="Images/crime.png" alt="Headline" width="1000"/>
 
 ### Technologies
 * Python
