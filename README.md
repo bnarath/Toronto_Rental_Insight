@@ -137,6 +137,8 @@ The map includes the following functionalities:
 * tooltip when hovering over markers
 * Upon clicking on a rental posting marker, a circle shows a 1 km radius around the marker. Other markers appear within that circle's radius showing crime incidences that occurred in the past 6 months. 
 
+<img src="Images/mapTooltip.png" alt="Headline" width="1000"/>
+<img src="Images/mapCommunityToogle.png" alt="Headline" width="1000"/>
 
 ### Sidebar
 
@@ -145,8 +147,10 @@ By default/opening dashboard, the side bar contains dropdown menus that enable u
 * Rental cost
 * Number of bedrooms
 
-
-<img src="Images/filter.png" alt="Headline" width="1000"/>
+<img src="Images/default.png" alt="Headline" width="1000"/>
+<img src="Images/filterOpen.png" alt="Headline" width="1000"/>
+<img src="Images/filterOpen.png" alt="Headline" width="1000"/>
+<img src="Images/appliedFilter.png" alt="Headline" width="1000"/>
 
 A filter button at the top of the sidebar enables users to toggle back to this view. 
 
@@ -157,11 +161,11 @@ Otherwise, there will be three versions of the sidebar based on how users intera
 * Bar chart of average income with FSA compared to Toronto overall
 * Heat map of Toronto showing crime incidence
 
-<img src="Images/rental.png" alt="Headline" width="1000"/>
+<img src="Images/rentalListing.png" alt="Headline" width="1000"/>
 
 #### Click on Community Asset Marker
 * Community Asset information 
-<img src="Images/community.png" alt="Headline" width="1000"/>
+<img src="Images/communityInfo.png" alt="Headline" width="1000"/>
 
 #### Click on FSA
 
@@ -171,7 +175,8 @@ Rental posting data
 * bar graph displaying average cost to rent in FSA (data scrapped that day) by number of bedrooms.
 * line graph displaying average to rent in FSA over time (historical/trending data) by number of bedrooms.
 
-<img src="Images/rental_fsa.png" alt="Headline" width="1000"/>
+<img src="Images/incomeTrends.png" alt="Headline" width="1000"/>
+<img src="Images/rentTimeTrends.png" alt="Headline" width="1000"/>
 
 
 ### Technologies
